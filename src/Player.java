@@ -18,5 +18,4 @@ public class Player {
         base_id++;
         return base_id;
     }
-
 }

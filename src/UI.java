@@ -4,7 +4,29 @@ public class UI {
     static Scanner inputReader = new Scanner(System.in);
 
     public static void runGame() {
-        showLoginMenu();
+        int choice;
+        do {
+            showLoginMenu();
+            choice = getUserInt("choose your rule.");
+            switch (choice) {
+                case 1:
+
+                    break;
+                case 2:
+                    signPlayer();
+                    break;
+                case 3:
+
+                    break;
+                case 0:
+                    break;
+
+                default:
+                    System.out.println("choose a valid number!");
+                    break;
+            }
+        } while (choice != 0);
+
         // Board board = new Board(0, 4);
         // for (int i = 0; i < board.getBoardLength(); i++) {
         // for (int j = 0; j < board.getBoardLength(); j++) {
@@ -13,12 +35,46 @@ public class UI {
         // System.out.println();
     }
 
+    private static int getUserInt(String message) {
+        System.out.println(message);
+        int userNumber = inputReader.nextInt();
+        inputReader.nextLine();
+        return userNumber;
+    }
+
+    private static String getUserString(String message) {
+        System.out.println(message);
+        String userText = inputReader.nextLine();
+        return userText;
+    }
+
     private static void showLoginMenu() {
+
         System.out.println("___________2048___________\n" +
                 "1. Login\n" +
                 "2. Sign up\n" +
-                "3. League table\n" +
+                "3. League leaderboard\n" +
                 "0. Exit");
     }
 
+    private static void signPlayer() {
+        String username;
+        String password;
+        while (true) {
+            username = getUserString("enter your username: \n"
+                    + "it must contain characters, numbers and at least one special character like @, $, #, ...");
+            if (username.matches(".*\\w.*") && username.matches(".*[@#$*%!?].*")) {
+                break;
+            }
+            System.out.println("please enter a valid username");
+        }
+        while (true) {
+            password = getUserString("enter your passsword: \n" + "(at least 5 characters)");
+            if (password.matches(".{5,}")) {
+                break;
+            }
+            System.out.println("please enter a valid password");
+        }
+        League.addPlayer(username, password);
+    }
 }
