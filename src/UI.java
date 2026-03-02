@@ -50,7 +50,7 @@ public class UI {
 
     private static void showLoginMenu() {
 
-        System.out.println("___________2048___________\n" +
+        System.out.println("\n\n___________2048___________\n" +
                 "1. Login\n" +
                 "2. Sign up\n" +
                 "3. League leaderboard\n" +
@@ -99,19 +99,34 @@ public class UI {
             }
             System.out.println("password is incorrect");
         }
-        // game menu
+        playerMenu();
     }
 
-    private static void playMenu() {
-        System.out.println("game menu");
-        // switch (inputReader) {
-        // case value:
+    private static void playerMenu() {
+        System.out.println("\n\n_____________Game menu_____________\n" +
+                "1. Add and play new board\n" +
+                "2. Recent boards\n" +
+                "3. Game stats\n" +
+                "0. Exit");
 
-        // break;
-
-        // default:
-        // break;
-        // }
+        int choice;
+        do {
+            choice = getUserInt("");
+            switch (choice) {
+                case 1:
+                    // add and play boards
+                    break;
+                case 2:
+                    // boards history
+                    break;
+                case 3:
+                    // game stats
+                    break;
+                default:
+                    System.out.println("choose a valid number!");
+                    break;
+            }
+        } while (choice != 0);
     }
 
 }
