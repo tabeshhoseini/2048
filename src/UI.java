@@ -10,7 +10,7 @@ public class UI {
             choice = getUserInt("choose your rule.");
             switch (choice) {
                 case 1:
-
+                    loginPlayer();
                     break;
                 case 2:
                     signPlayer();
@@ -63,7 +63,7 @@ public class UI {
         while (true) {
             username = getUserString("enter your username: \n"
                     + "it must contain characters, numbers and at least one special character like @, $, #, ...");
-            if (username.matches(".*\\w.*") && username.matches(".*[@#$*%!?].*")) {
+            if (username.matches(".*\\w.*") && username.matches(".*[@#$&*%!?].*")) {
                 break;
             }
             System.out.println("please enter a valid username");
@@ -77,4 +77,41 @@ public class UI {
         }
         League.addPlayer(username, password);
     }
+
+    private static void loginPlayer() {
+        String username;
+        String password;
+        while (true) {
+            username = getUserString("enter your username: \n" + "or type 'exit'");
+            if (League.isPlayerExist(username)) {
+                break;
+            } else if (username.equals("exit")) {
+                return;
+            }
+            System.out.println("player not found!");
+        }
+        while (true) {
+            password = getUserString("enter your passsword:\n" + "or type 'exit'");
+            if (League.checkPassword(password, username)) {
+                break;
+            } else if (password.equals("exit")) {
+                return;
+            }
+            System.out.println("password is incorrect");
+        }
+        // game menu
+    }
+
+    private static void playMenu() {
+        System.out.println("game menu");
+        // switch (inputReader) {
+        // case value:
+
+        // break;
+
+        // default:
+        // break;
+        // }
+    }
+
 }

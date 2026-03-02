@@ -14,6 +14,14 @@ public class Player {
 
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     private int getNextId() {
         base_id++;
         return base_id;
