@@ -4,28 +4,28 @@ public class UI {
     static Scanner inputReader = new Scanner(System.in);
 
     public static void runGame() {
-        int choice;
-        do {
-            showLoginMenu();
-            choice = getUserInt("enter your choice: ");
-            switch (choice) {
-                case 1:
-                    loginPlayer();
-                    break;
-                case 2:
-                    signPlayer();
-                    break;
-                case 3:
+        // int choice;
+        // do {
+        // showLoginMenu();
+        // choice = getUserInt("enter your choice: ");
+        // switch (choice) {
+        // case 1:
+        // loginPlayer();
+        // break;
+        // case 2:
+        // signPlayer();
+        // break;
+        // case 3:
 
-                    break;
-                case 0:
-                    break;
+        // break;
+        // case 0:
+        // break;
 
-                default:
-                    System.out.println("choose a valid number!");
-                    break;
-            }
-        } while (choice != 0);
+        // default:
+        // System.out.println("choose a valid number!");
+        // break;
+        // }
+        // } while (choice != 0);
 
         // TEST TEST TEST
         Board board = new Board(0, 4);
@@ -36,7 +36,8 @@ public class UI {
             System.out.println();
         }
         System.out.println();
-        board.moveLeft();
+        board.moveRight();
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 System.out.print(board.getBoard()[i][j] + "  ");

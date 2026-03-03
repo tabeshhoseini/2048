@@ -1,5 +1,4 @@
 import java.util.List;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -55,7 +54,7 @@ public class Board {
         return isMoved;
     }
 
-    private boolean MoveRight() {
+    private boolean moveRight() {
         boolean isMoved = false;
 
         for (int i = 0; i < size; i++) {
@@ -118,8 +117,12 @@ public class Board {
         return newArray;
     }
 
-    private int[] getRow(int i) {
-        return board[i];
+    private int[] getColumn(int index) {
+        int[] column = new int[size]
+        for (int i = 0; i < size; i++) {
+            column[i] = board[i][index];
+        }
+        return column;
     }
 
     public int[][] getBoard() {
