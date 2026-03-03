@@ -43,8 +43,32 @@ public class Board {
         return emptyBlocks;
     }
 
+    public boolean moveLeft() {
+        boolean isMoved = false;
+        for (int i = 0; i < size; i++) {
+            int[] newLine = new int[size];
+            int index = 0;
+            for (int j = 0; j < size; j++) {
+                if (board[i][j] != 0) {
+                    newLine[index] = board[i][j];
+                    index++;
+                    isMoved = true;
+                }
+            }
+            board[i] = newLine;
+        }
+        return isMoved;
+    }
+
+    // private int[] mergeLine() {
+
+    // }
+
+    private int[] getRow(int i) {
+        return board[i];
+    }
+
     public int[][] getBoard() {
         return board;
     }
-
 }

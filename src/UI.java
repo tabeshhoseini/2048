@@ -7,7 +7,7 @@ public class UI {
         int choice;
         do {
             showLoginMenu();
-            choice = getUserInt("choose your rule.");
+            choice = getUserInt("enter your choice: ");
             switch (choice) {
                 case 1:
                     loginPlayer();
@@ -27,14 +27,24 @@ public class UI {
             }
         } while (choice != 0);
 
+        // TEST TEST TEST
         Board board = new Board(0, 4);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                System.out.print(board.getBoard()[i][j]);
+                System.out.print(board.getBoard()[i][j] + "  ");
             }
             System.out.println();
         }
         System.out.println();
+        board.moveLeft();
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(board.getBoard()[i][j] + "  ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+
     }
 
     private static int getUserInt(String message) {
