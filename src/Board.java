@@ -15,6 +15,7 @@ public class Board {
     public Board(int id, int size) {
         this.id = id;
         this.size = size;
+        this.point = 0;
         this.board = new int[size][size];
         this.random = new Random();
 
@@ -46,23 +47,54 @@ public class Board {
     public boolean moveLeft() {
         boolean isMoved = false;
         for (int i = 0; i < size; i++) {
-            int[] newLine = new int[size];
-            int index = 0;
-            for (int j = 0; j < size; j++) {
-                if (board[i][j] != 0) {
-                    newLine[index] = board[i][j];
-                    index++;
-                    isMoved = true;
-                }
+            int[] newLine = mergeLine(board[i]);
+            if (!arrayEquals(newLine, board[i])) {
+                isMoved = true;
+                board[i] = newLine;
             }
-            board[i] = newLine;
         }
         return isMoved;
     }
 
-    // private int[] mergeLine() {
+    private int[] mergeLine(int[] line) {
+        int[] newLine = new int[size];
+        int index = 0;
+        for (int i = 0; i < size; i++) {
+            if (line[i] != 0) {
+                newLine[index] = line[i];
+                index++;
+            }
+        }
 
-    // }
+        for (int i = 0; i < size - 1; i++) {
+            if (newLine[i] != 0 && newLine[i] == newLine[i + 1]) {
+                newLine[i] = newLine[i] * 2;
+                point += newLine[i];
+                newLine[i + 1] = 0;
+            }
+        }
+
+        int[] finalLine = new int[size];
+        index = 0;
+        for (int i = 0; i < size; i++) {
+            if (newLine[i] != 0) {
+                finalLine[index] = newLine[i];
+                index++;
+            }
+        }
+
+        return finalLine;
+
+    }
+
+    private boolean arrayEquals(int[] array1, int[] array2) {
+        for (int i = 0; i < array1.length; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private int[] getRow(int i) {
         return board[i];
