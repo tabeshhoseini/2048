@@ -1,24 +1,50 @@
-public class Board {
-    private int id;
-    private int boardLength;
-    private int[][] board;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 
-    public Board(int id, int boardLength) {
+import javax.swing.text.Position;
+
+public class Board {
+
+    private int id;
+    private int size;
+    private int point;
+    private int[][] board;
+    private Random random;
+
+    public Board(int id, int size) {
         this.id = id;
-        this.boardLength = boardLength;
-        this.board = new int[boardLength][boardLength];
-        for (int i = 0; i < boardLength; i++) {
-            for (int j = 0; j < boardLength; j++) {
-                this.board[i][j] = 0;
+        this.size = size;
+        this.board = new int[size][size];
+        this.random = new Random();
+
+        addRandomBlock();
+        addRandomBlock();
+    }
+
+    private void addRandomBlock() {
+        List<Block> emptyBlocks = findEmptyBlocks();
+
+        Block block = emptyBlocks.get(random.nextInt(emptyBlocks.size()));
+        // 90% chance of 2, 10% chance of 4
+        board[block.row][block.col] = random.nextDouble() < 0.9 ? 2 : 4;
+    }
+
+    private List<Block> findEmptyBlocks() {
+        List<Block> emptyBlocks = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j] == 0) {
+                    emptyBlocks.add(new Block(i, j));
+                }
             }
         }
+        return emptyBlocks;
     }
 
     public int[][] getBoard() {
         return board;
     }
 
-    public int getBoardLength() {
-        return boardLength;
-    }
 }

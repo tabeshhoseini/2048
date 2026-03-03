@@ -27,12 +27,14 @@ public class UI {
             }
         } while (choice != 0);
 
-        // Board board = new Board(0, 4);
-        // for (int i = 0; i < board.getBoardLength(); i++) {
-        // for (int j = 0; j < board.getBoardLength(); j++) {
-        // System.out.print(board.getBoard()[i][j]);
-        // }
-        // System.out.println();
+        Board board = new Board(0, 4);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(board.getBoard()[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
     private static int getUserInt(String message) {
