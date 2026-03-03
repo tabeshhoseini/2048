@@ -69,6 +69,35 @@ public class Board {
         return isMoved;
     }
 
+    private boolean moveUp() {
+        boolean isMoved = false;
+
+        for (int i = 0; i < size; i++) {
+            int[] newLine = mergeLine(getColumn(i));
+            if (!arrayEquals(newLine, getColumn(i))) {
+                isMoved = true;
+                setColumn(newLine, i);
+            }
+        }
+
+        return isMoved;
+    }
+
+    private boolean moveDown() {
+        boolean isMoved = false;
+
+        for (int i = 0; i < size; i++) {
+            int[] reversedArray = reverseArray(getColumn(i));
+            int[] newLine = mergeLine(reversedArray);
+            if (!arrayEquals(newLine, reversedArray)) {
+                isMoved = true;
+                setColumn(reverseArray(newLine), i);
+            }
+        }
+
+        return isMoved;
+    }
+
     private int[] mergeLine(int[] line) {
         int[] newLine = new int[size];
         int index = 0;
@@ -118,11 +147,17 @@ public class Board {
     }
 
     private int[] getColumn(int index) {
-        int[] column = new int[size]
+        int[] column = new int[size];
         for (int i = 0; i < size; i++) {
             column[i] = board[i][index];
         }
         return column;
+    }
+
+    private void setColumn(int[] line, int index) {
+        for (int i = 0; i < size; i++) {
+            board[i][index] = line[i];
+        }
     }
 
     public int[][] getBoard() {

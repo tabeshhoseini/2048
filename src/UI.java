@@ -36,7 +36,6 @@ public class UI {
             System.out.println();
         }
         System.out.println();
-        board.moveRight();
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
