@@ -1,8 +1,7 @@
 import java.util.List;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.text.Position;
 
 public class Board {
 
@@ -24,15 +23,15 @@ public class Board {
     }
 
     private void addRandomBlock() {
-        List<Block> emptyBlocks = findEmptyBlocks();
+        ArrayList<Block> emptyBlocks = findEmptyBlocks();
 
         Block block = emptyBlocks.get(random.nextInt(emptyBlocks.size()));
         // 90% chance of 2, 10% chance of 4
         board[block.row][block.col] = random.nextDouble() < 0.9 ? 2 : 4;
     }
 
-    private List<Block> findEmptyBlocks() {
-        List<Block> emptyBlocks = new ArrayList<>();
+    private ArrayList<Block> findEmptyBlocks() {
+        ArrayList<Block> emptyBlocks = new ArrayList<Block>();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -44,7 +43,7 @@ public class Board {
         return emptyBlocks;
     }
 
-    public boolean moveLeft() {
+    private boolean moveLeft() {
         boolean isMoved = false;
         for (int i = 0; i < size; i++) {
             int[] newLine = mergeLine(board[i]);
@@ -53,6 +52,21 @@ public class Board {
                 board[i] = newLine;
             }
         }
+        return isMoved;
+    }
+
+    private boolean MoveRight() {
+        boolean isMoved = false;
+
+        for (int i = 0; i < size; i++) {
+            int[] reversedArray = reverseArray(board[i]);
+            int[] newLine = mergeLine(reversedArray);
+            if (!arrayEquals(newLine, reversedArray)) {
+                isMoved = true;
+                board[i] = reverseArray(newLine);
+            }
+        }
+
         return isMoved;
     }
 
@@ -94,6 +108,14 @@ public class Board {
             }
         }
         return true;
+    }
+
+    private int[] reverseArray(int[] array) {
+        int[] newArray = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[array.length - 1 - i];
+        }
+        return newArray;
     }
 
     private int[] getRow(int i) {
