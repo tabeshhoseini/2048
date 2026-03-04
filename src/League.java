@@ -32,4 +32,13 @@ public class League {
         }
         return false;
     }
+
+    public static Player getPlayerByUsername(String username) {
+        for (Player i : players) {
+            if (i.getUsername().equals(username)) {
+                return i;
+            }
+        }
+        return null;
+    }
 }

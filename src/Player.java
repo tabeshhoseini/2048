@@ -37,4 +37,8 @@ public class Player {
     public String getPassword() {
         return password;
     }
+
+    public ArrayList<Board> getBoards() {
+        return boards;
+    }
 }

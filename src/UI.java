@@ -4,46 +4,46 @@ public class UI {
     static Scanner inputReader = new Scanner(System.in);
 
     public static void runGame() {
-        // int choice;
-        // do {
-        // showLoginMenu();
-        // choice = getUserInt("enter your choice: ");
-        // switch (choice) {
-        // case 1:
-        // loginPlayer();
-        // break;
-        // case 2:
-        // signPlayer();
-        // break;
-        // case 3:
+        int choice;
+        do {
+            showLoginMenu();
+            choice = getUserInt("enter your choice: ");
+            switch (choice) {
+                case 1:
+                    loginPlayer();
+                    break;
+                case 2:
+                    signPlayer();
+                    break;
+                case 3:
 
-        // break;
-        // case 0:
-        // break;
+                    break;
+                case 0:
+                    break;
 
-        // default:
-        // System.out.println("choose a valid number!");
-        // break;
-        // }
-        // } while (choice != 0);
+                default:
+                    System.out.println("choose a valid number!");
+                    break;
+            }
+        } while (choice != 0);
 
         // TEST TEST TEST
-        Board board = new Board(0, 4);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(board.getBoard()[i][j] + "  ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+        // Board board = new Board(0, 4);
+        // for (int i = 0; i < 4; i++) {
+        // for (int j = 0; j < 4; j++) {
+        // System.out.print(board.getBoard()[i][j] + " ");
+        // }
+        // System.out.println();
+        // }
+        // System.out.println();
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(board.getBoard()[i][j] + "  ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+        // for (int i = 0; i < 4; i++) {
+        // for (int j = 0; j < 4; j++) {
+        // System.out.print(board.getBoard()[i][j] + " ");
+        // }
+        // System.out.println();
+        // }
+        // System.out.println();
 
     }
 
@@ -111,10 +111,10 @@ public class UI {
             }
             System.out.println("password is incorrect");
         }
-        playerMenu();
+        playerMenu(League.getPlayerByUsername(username));
     }
 
-    private static void playerMenu() {
+    private static void playerMenu(Player player) {
         System.out.println("\n\n_____________Game menu_____________\n" +
                 "1. Add and play new board\n" +
                 "2. Recent boards\n" +
@@ -129,7 +129,7 @@ public class UI {
                     // add and play boards
                     break;
                 case 2:
-                    // boards history
+                    showAllBoards(player);
                     break;
                 case 3:
                     // game stats
@@ -141,4 +141,48 @@ public class UI {
         } while (choice != 0);
     }
 
+    private static void showBoard(Board board) {
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+                System.out.print(board.getBoard()[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    private static void showAllBoards(Player player) {
+        for (Board board : player.getBoards()) {
+            System.out.println("id: " + board.getId());
+            showBoard(board);
+        }
+    }
+
+    private static void addNewBoard(Player player) {
+        int boardSize;
+        int choice;
+        main: while (true) {
+            System.out.println("1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n" + "4. 10x10 (if your leading a leaderboard)");
+            choice = getUserInt("choose your board: ");
+            switch (choice) {
+                case 1:
+                    boardSize = 4;
+                    break main;
+                case 2:
+                    boardSize = 6;
+                    break main;
+                case 3:
+                    boardSize = 8;
+                    break main;
+                // case 4:
+
+                // break main;
+                default:
+                    System.out.println("choose a valid number!");
+                    break;
+            }
+        }
+        player.addNewBoard(boardSize);
+        // play board
+    }
 }

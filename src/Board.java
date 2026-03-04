@@ -7,7 +7,7 @@ public class Board {
     private int id;
     private int size;
     private int point;
-    private String status; // completed, finished, paused
+    private String status; // won, finished, paused
     private int[][] board;
     private Random random;
 
@@ -96,7 +96,6 @@ public class Board {
                 setColumn(reverseArray(newLine), i);
             }
         }
-
         return isMoved;
     }
 
@@ -161,10 +160,11 @@ public class Board {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size - 1; j++) {
                     if (getColumn(i)[j] == getColumn(i)[j + 1]) {
-                        return false
+                        return false;
                     }
                 }
             }
+            status = "finished";
             return true;
         }
         return false;
@@ -172,6 +172,7 @@ public class Board {
 
     public boolean checkWin() {
         if (point == 2048) {
+            status = "Won";
             return true;
         }
         return false;
@@ -193,5 +194,13 @@ public class Board {
 
     public int[][] getBoard() {
         return board;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getId() {
+        return id;
     }
 }
