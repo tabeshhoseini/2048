@@ -23,7 +23,7 @@ public class Board {
         addRandomBlock();
     }
 
-    private void addRandomBlock() {
+    public void addRandomBlock() {
         ArrayList<Block> emptyBlocks = findEmptyBlocks();
 
         Block block = emptyBlocks.get(random.nextInt(emptyBlocks.size()));
@@ -44,7 +44,7 @@ public class Board {
         return emptyBlocks;
     }
 
-    private boolean moveLeft() {
+    public boolean moveLeft() {
         boolean isMoved = false;
         for (int i = 0; i < size; i++) {
             int[] newLine = mergeLine(board[i]);
@@ -56,7 +56,7 @@ public class Board {
         return isMoved;
     }
 
-    private boolean moveRight() {
+    public boolean moveRight() {
         boolean isMoved = false;
 
         for (int i = 0; i < size; i++) {
@@ -71,7 +71,7 @@ public class Board {
         return isMoved;
     }
 
-    private boolean moveUp() {
+    public boolean moveUp() {
         boolean isMoved = false;
 
         for (int i = 0; i < size; i++) {
@@ -85,7 +85,7 @@ public class Board {
         return isMoved;
     }
 
-    private boolean moveDown() {
+    public boolean moveDown() {
         boolean isMoved = false;
 
         for (int i = 0; i < size; i++) {
@@ -202,5 +202,9 @@ public class Board {
 
     public int getId() {
         return id;
+    }
+
+    public int getPoint() {
+        return point;
     }
 }

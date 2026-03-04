@@ -60,6 +60,12 @@ public class UI {
         return userText;
     }
 
+    private static char getUserChar(String message) {
+        System.out.println(message);
+        char userChar = inputReader.nextLine().charAt(0);
+        return userChar;
+    }
+
     private static void showLoginMenu() {
 
         System.out.println("\n\n___________2048___________\n" +
@@ -115,22 +121,23 @@ public class UI {
     }
 
     private static void playerMenu(Player player) {
-        System.out.println("\n\n_____________Game menu_____________\n" +
-                "1. Add and play new board\n" +
-                "2. Recent boards\n" +
-                "3. Game stats\n" +
-                "0. Exit");
 
         int choice;
         do {
+            System.out.println("\n\n_____________Game menu_____________\n" +
+                    "1. Add and play new board\n" +
+                    "2. Recent boards\n" +
+                    "3. Game stats\n" +
+                    "0. Exit");
             choice = getUserInt("");
             switch (choice) {
                 case 1:
-                    // add and play boards
+                    addNewBoard(player);
                     break;
                 case 2:
                     showAllBoards(player);
-                    break;
+                    Board board = loadBoard(player);
+                    playBoard(board);
                 case 3:
                     // game stats
                     break;
@@ -182,7 +189,57 @@ public class UI {
                     break;
             }
         }
-        player.addNewBoard(boardSize);
-        // play board
+        int boardId = player.addNewBoard(boardSize);
+        playBoard(player.getBoardById(boardId));
+    }
+
+    public static Board loadBoard(Player player) {
+        int boardId;
+        while (true) {
+            boardId = getUserInt("choose the board by id: ");
+            if (player.getBoardById(boardId) != null) {
+                return player.getBoardById(boardId);
+            }
+            System.out.println("board not found!");
+        }
+    }
+
+    public static void playBoard(Board board) {
+        char move;
+        turn: while (true) {
+            showBoard(board);
+            System.out.println("r-right | l-left | u-up | d-down\n" + "e-pause and exit");
+            move = getUserChar("enter your move: ");
+            switch (move) {
+                case 'r':
+                    board.moveRight();
+                    break;
+                case 'l':
+                    board.moveLeft();
+                    break;
+                case 'u':
+                    board.moveUp();
+                    break;
+                case 'd':
+                    board.moveDown();
+                    break;
+                case 'e':
+                    break turn;
+                default:
+                    System.out.println("enter a valid character!");
+                    break;
+            }
+            if (board.isGameFinished()) {
+                if (board.checkWin()) {
+                    System.out.println("congrats! you won!");
+                    break turn;
+                } else {
+                    System.out.println("well done!");
+                    System.out.println("your point: " + board.getPoint());
+                    break turn;
+                }
+            }
+            board.addRandomBlock();
+        }
     }
 }

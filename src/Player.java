@@ -24,10 +24,11 @@ public class Player {
 
     }
 
-    public void addNewBoard(int size) {
+    public int addNewBoard(int size) {
         boardBaseId++;
         Board board = new Board(boardBaseId, size);
         boards.add(board);
+        return boardBaseId;
     }
 
     public String getUsername() {
@@ -40,5 +41,14 @@ public class Player {
 
     public ArrayList<Board> getBoards() {
         return boards;
+    }
+
+    public Board getBoardById(int id) {
+        for (Board board : boards) {
+            if (board.getId() == id) {
+                return board;
+            }
+        }
+        return null;
     }
 }
