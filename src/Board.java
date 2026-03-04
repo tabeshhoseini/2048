@@ -7,6 +7,7 @@ public class Board {
     private int id;
     private int size;
     private int point;
+    private String status; // completed, finished, paused
     private int[][] board;
     private Random random;
 
@@ -16,6 +17,7 @@ public class Board {
         this.point = 0;
         this.board = new int[size][size];
         this.random = new Random();
+        this.status = "Paused";
 
         addRandomBlock();
         addRandomBlock();
@@ -144,6 +146,35 @@ public class Board {
             newArray[i] = array[array.length - 1 - i];
         }
         return newArray;
+    }
+
+    public boolean isGameFinished() {
+        if (findEmptyBlocks().isEmpty()) {
+            // check for each row and column if any move is possible
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size - 1; j++) {
+                    if (board[i][j] == board[i][j + 1]) {
+                        return false;
+                    }
+                }
+            }
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size - 1; j++) {
+                    if (getColumn(i)[j] == getColumn(i)[j + 1]) {
+                        return false
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkWin() {
+        if (point == 2048) {
+            return true;
+        }
+        return false;
     }
 
     private int[] getColumn(int index) {

@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 
 public class Player {
-    private static int base_id = 0;
+    private int boardBaseId = 0;
 
     private String username;
     private String password;
-    private int id;
 
     // game stats
     private int overallPoints;
@@ -22,8 +21,13 @@ public class Player {
     public Player(String username, String password) {
         this.username = username;
         this.password = password;
-        this.id = getNextId();
 
+    }
+
+    public void addNewBoard(int size) {
+        boardBaseId++;
+        Board board = new Board(boardBaseId, size);
+        boards.add(board);
     }
 
     public String getUsername() {
@@ -32,10 +36,5 @@ public class Player {
 
     public String getPassword() {
         return password;
-    }
-
-    private int getNextId() {
-        base_id++;
-        return base_id;
     }
 }
