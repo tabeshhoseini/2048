@@ -192,6 +192,21 @@ public class Board {
         }
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isBoardOpen() {
+        if (this.status.equals("Won") || this.status.equals("Finished")) {
+            return false;
+        }
+        return true;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     public int[][] getBoard() {
         return board;
     }

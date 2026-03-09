@@ -161,6 +161,7 @@ public class UI {
     private static void showAllBoards(Player player) {
         for (Board board : player.getBoards()) {
             System.out.println("id: " + board.getId());
+            System.out.println("board status: " + board.getStatus());
             showBoard(board);
         }
     }
@@ -198,6 +199,10 @@ public class UI {
         while (true) {
             boardId = getUserInt("choose the board by id: ");
             if (player.getBoardById(boardId) != null) {
+                if (!player.getBoardById(boardId).isBoardOpen()) {
+                    System.out.println("the board is finished.");
+                    continue;
+                }
                 return player.getBoardById(boardId);
             }
             System.out.println("board not found!");
@@ -206,11 +211,13 @@ public class UI {
 
     public static void playBoard(Board board) {
         char move;
-        boolean validMove = false;
+        boolean validMove;
         turn: while (true) {
             showBoard(board);
             System.out.println("r-right | l-left | u-up | d-down\n" + "e-pause and exit");
             move = getUserChar("enter your move: ");
+            validMove = false;
+
             switch (move) {
                 case 'r':
                     validMove = board.moveRight();
@@ -233,10 +240,12 @@ public class UI {
             if (board.isGameFinished()) {
                 if (board.checkWin()) {
                     System.out.println("congrats! you won!");
+                    board.setStatus("Won");
                     break turn;
                 } else {
                     System.out.println("well done!");
                     System.out.println("your point: " + board.getPoint());
+                    board.setStatus("Finished");
                     break turn;
                 }
             }

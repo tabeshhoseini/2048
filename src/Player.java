@@ -7,13 +7,13 @@ public class Player {
     private String password;
 
     // game stats
-    private int overallPoints;
+    private int overallPoint;
     private int highestPoint;
     private int averagePoint;
     private int highestNumber;
-    private int gamenumber;
+    private int gameNumber;
     private int moveNumber;
-    private int mergenumber;
+    private int mergeNumber;
     private int undoNumber;
 
     private ArrayList<Board> boards = new ArrayList<Board>();
@@ -21,7 +21,6 @@ public class Player {
     public Player(String username, String password) {
         this.username = username;
         this.password = password;
-
     }
 
     public int addNewBoard(int size) {
@@ -50,5 +49,12 @@ public class Player {
             }
         }
         return null;
+    }
+
+    public int getOverallPoint() {
+        for (Board board : boards) {
+            this.overallPoint += board.getPoint();
+        }
+        return this.overallPoint;
     }
 }
