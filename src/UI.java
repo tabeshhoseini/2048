@@ -206,22 +206,23 @@ public class UI {
 
     public static void playBoard(Board board) {
         char move;
+        boolean validMove = false;
         turn: while (true) {
             showBoard(board);
             System.out.println("r-right | l-left | u-up | d-down\n" + "e-pause and exit");
             move = getUserChar("enter your move: ");
             switch (move) {
                 case 'r':
-                    board.moveRight();
+                    validMove = board.moveRight();
                     break;
                 case 'l':
-                    board.moveLeft();
+                    validMove = board.moveLeft();
                     break;
                 case 'u':
-                    board.moveUp();
+                    validMove = board.moveUp();
                     break;
                 case 'd':
-                    board.moveDown();
+                    validMove = board.moveDown();
                     break;
                 case 'e':
                     break turn;
@@ -239,7 +240,9 @@ public class UI {
                     break turn;
                 }
             }
-            board.addRandomBlock();
+            if (validMove) {
+                board.addRandomBlock();
+            }
         }
     }
 }
