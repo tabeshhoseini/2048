@@ -137,7 +137,10 @@ public class UI {
                 case 2:
                     showAllBoards(player);
                     Board board = loadBoard(player);
-                    playBoard(board);
+                    if (board != null) {
+                        playBoard(board);
+                    }
+                    break;
                 case 3:
                     // game stats
                     break;
@@ -196,8 +199,8 @@ public class UI {
 
     public static Board loadBoard(Player player) {
         int boardId;
-        while (true) {
-            boardId = getUserInt("choose the board by id: ");
+        do {
+            boardId = getUserInt("choose the board by id: (enter 0 to exit)");
             if (player.getBoardById(boardId) != null) {
                 if (!player.getBoardById(boardId).isBoardOpen()) {
                     System.out.println("the board is finished.");
@@ -206,7 +209,8 @@ public class UI {
                 return player.getBoardById(boardId);
             }
             System.out.println("board not found!");
-        }
+        } while (boardId != 0);
+        return null;
     }
 
     public static void playBoard(Board board) {
