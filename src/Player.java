@@ -52,9 +52,46 @@ public class Player {
     }
 
     public int getOverallPoint() {
+        int points = 0;
         for (Board board : boards) {
-            this.overallPoint += board.getPoint();
+            points += board.getPoint();
         }
-        return this.overallPoint;
+        return points;
+    }
+
+    public int getHighestPoint() {
+        int highest = 0;
+        for (Board board : boards) {
+            if (board.getPoint() > highest) {
+                highest = board.getPoint();
+            }
+        }
+        return highest;
+    }
+
+    public int getGameNumber() {
+        return boards.size();
+    }
+
+    public int getMergeNumber() {
+        int mergeNumber = 0;
+        for (Board board : boards) {
+            mergeNumber += board.getMergeNumber();
+        }
+        return mergeNumber;
+    }
+
+    public float getPointAverage() {
+        return getOverallPoint() / getGameNumber();
+    }
+
+    public int getHighestNumber() {
+        int highest = 0;
+        for (Board board : boards) {
+            if (board.getHighestNumber() > highest) {
+                highest = board.getHighestNumber();
+            }
+        }
+        return highest;
     }
 }

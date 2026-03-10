@@ -142,7 +142,7 @@ public class UI {
                     }
                     break;
                 case 3:
-                    // game stats
+                    showStats(player);
                     break;
                 default:
                     System.out.println("choose a valid number!");
@@ -164,6 +164,7 @@ public class UI {
     private static void showAllBoards(Player player) {
         for (Board board : player.getBoards()) {
             System.out.println("id: " + board.getId());
+            System.out.println("number of moves: " + board.getMoveNumber());
             System.out.println("board status: " + board.getStatus());
             showBoard(board);
         }
@@ -197,7 +198,7 @@ public class UI {
         playBoard(player.getBoardById(boardId));
     }
 
-    public static Board loadBoard(Player player) {
+    private static Board loadBoard(Player player) {
         int boardId;
         do {
             boardId = getUserInt("choose the board by id: (enter 0 to exit)");
@@ -213,7 +214,7 @@ public class UI {
         return null;
     }
 
-    public static void playBoard(Board board) {
+    private static void playBoard(Board board) {
         char move;
         boolean validMove;
         turn: while (true) {
@@ -257,5 +258,15 @@ public class UI {
                 board.addRandomBlock();
             }
         }
+    }
+
+    private static void showStats(Player player) {
+        System.out.println(player.getUsername() + " game stats" +
+                "\n Overall points: " + player.getOverallPoint() +
+                "\n Highest point: " + player.getHighestPoint() +
+                "\n Number of games: " + player.getGameNumber() +
+                "\n Number of merges: " + player.getMergeNumber() +
+                "\n Point average: " + player.getPointAverage() +
+                "\n Highest number: " + player.getHighestNumber());
     }
 }

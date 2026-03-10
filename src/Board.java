@@ -7,6 +7,8 @@ public class Board {
     private int id;
     private int size;
     private int point;
+    private int mergeNumber;
+    private int moveNumber;
     private String status; // won, finished, paused
     private int[][] board;
     private Random random;
@@ -15,6 +17,8 @@ public class Board {
         this.id = id;
         this.size = size;
         this.point = 0;
+        this.mergeNumber = 0;
+        this.moveNumber = 0;
         this.board = new int[size][size];
         this.random = new Random();
         this.status = "Paused";
@@ -51,6 +55,7 @@ public class Board {
             if (!arrayEquals(newLine, board[i])) {
                 isMoved = true;
                 board[i] = newLine;
+                moveNumber++;
             }
         }
         return isMoved;
@@ -65,6 +70,7 @@ public class Board {
             if (!arrayEquals(newLine, reversedArray)) {
                 isMoved = true;
                 board[i] = reverseArray(newLine);
+                moveNumber++;
             }
         }
 
@@ -79,6 +85,7 @@ public class Board {
             if (!arrayEquals(newLine, getColumn(i))) {
                 isMoved = true;
                 setColumn(newLine, i);
+                moveNumber++;
             }
         }
 
@@ -94,6 +101,7 @@ public class Board {
             if (!arrayEquals(newLine, reversedArray)) {
                 isMoved = true;
                 setColumn(reverseArray(newLine), i);
+                moveNumber++;
             }
         }
         return isMoved;
@@ -114,6 +122,7 @@ public class Board {
                 newLine[i] = newLine[i] * 2;
                 point += newLine[i];
                 newLine[i + 1] = 0;
+                mergeNumber++;
             }
         }
 
@@ -203,6 +212,18 @@ public class Board {
         return true;
     }
 
+    public int getHighestNumber() {
+        int highest = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j] > highest) {
+                    highest = board[i][j];
+                }
+            }
+        }
+        return highest;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -221,5 +242,13 @@ public class Board {
 
     public int getPoint() {
         return point;
+    }
+
+    public int getMergeNumber() {
+        return mergeNumber;
+    }
+
+    public int getMoveNumber() {
+        return moveNumber;
     }
 }
