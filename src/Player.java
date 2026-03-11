@@ -6,16 +6,6 @@ public class Player {
     private String username;
     private String password;
 
-    // game stats
-    private int overallPoint;
-    private int highestPoint;
-    private int averagePoint;
-    private int highestNumber;
-    private int gameNumber;
-    private int moveNumber;
-    private int mergeNumber;
-    private int undoNumber;
-
     private ArrayList<Board> boards = new ArrayList<Board>();
 
     public Player(String username, String password) {
