@@ -12,6 +12,8 @@ public class Board {
     private int[][] board;
     private Random random;
 
+    private Board previousBoard;
+
     public Board(int id, int size) {
         this.id = id;
         this.size = size;
@@ -49,13 +51,19 @@ public class Board {
 
     public boolean moveLeft() {
         boolean isMoved = false;
+
         for (int i = 0; i < size; i++) {
             int[] newLine = mergeLine(board[i]);
             if (!arrayEquals(newLine, board[i])) {
+                if (!isMoved) {
+                    this.previousBoard = this;
+                }
                 isMoved = true;
                 board[i] = newLine;
-                moveNumber++;
             }
+        }
+        if (isMoved) {
+            moveNumber++;
         }
         return isMoved;
     }
@@ -67,10 +75,15 @@ public class Board {
             int[] reversedArray = reverseArray(board[i]);
             int[] newLine = mergeLine(reversedArray);
             if (!arrayEquals(newLine, reversedArray)) {
+                if (!isMoved) {
+                    this.previousBoard = this;
+                }
                 isMoved = true;
                 board[i] = reverseArray(newLine);
-                moveNumber++;
             }
+        }
+        if (isMoved) {
+            moveNumber++;
         }
 
         return isMoved;
@@ -82,10 +95,15 @@ public class Board {
         for (int i = 0; i < size; i++) {
             int[] newLine = mergeLine(getColumn(i));
             if (!arrayEquals(newLine, getColumn(i))) {
+                if (!isMoved) {
+                    this.previousBoard = this;
+                }
                 isMoved = true;
                 setColumn(newLine, i);
-                moveNumber++;
             }
+        }
+        if (isMoved) {
+            moveNumber++;
         }
 
         return isMoved;
@@ -98,10 +116,15 @@ public class Board {
             int[] reversedArray = reverseArray(getColumn(i));
             int[] newLine = mergeLine(reversedArray);
             if (!arrayEquals(newLine, reversedArray)) {
+                if (!isMoved) {
+                    this.previousBoard = this;
+                }
                 isMoved = true;
                 setColumn(reverseArray(newLine), i);
-                moveNumber++;
             }
+        }
+        if (isMoved) {
+            moveNumber++;
         }
         return isMoved;
     }
@@ -221,6 +244,14 @@ public class Board {
             }
         }
         return highest;
+    }
+
+    public void setPreviousBoard(Board previousBoard) {
+        this.previousBoard = previousBoard;
+    }
+
+    public Board getPreviousBoard() {
+        return previousBoard;
     }
 
     public String getStatus() {

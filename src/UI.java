@@ -219,7 +219,8 @@ public class UI {
         boolean validMove;
         turn: while (true) {
             showBoard(board);
-            System.out.println("r-right | l-left | u-up | d-down\n" + "e-pause and exit");
+            System.out.println(
+                    "r-right | l-left | u-up | d-down\n" + "n-undo(only three times per board) | e-pause and exit");
             move = getUserChar("enter your move: ");
             validMove = false;
 
@@ -235,6 +236,9 @@ public class UI {
                     break;
                 case 'd':
                     validMove = board.moveDown();
+                    break;
+                case 'n':
+                    undoBoard(board);
                     break;
                 case 'e':
                     break turn;
@@ -268,5 +272,30 @@ public class UI {
                 "\n Number of merges: " + player.getMergeNumber() +
                 "\n Point average: " + player.getPointAverage() +
                 "\n Highest number: " + player.getHighestNumber());
+    }
+
+    private static void undoBoard(Board board) {
+        if (board.getPreviousBoard() == null) {
+            System.out.println("you haven't had any move yet!");
+            return;
+        }
+        int moveBackNumber;
+
+        while (true) {
+            moveBackNumber = getUserInt("how many moves do you want to undo?(MAX : 5) ");
+
+            if (moveBackNumber > 5 || moveBackNumber < 1) {
+                System.out.println("enter a valid number");
+                continue;
+            }
+
+            for (int i = 0; i < moveBackNumber; i++) {
+                if (board.getPreviousBoard() != null) {
+                    Board previousBoard = board.getPreviousBoard();
+                    board = previousBoard;
+                }
+            }
+            break;
+        }
     }
 }
