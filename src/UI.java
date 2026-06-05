@@ -246,21 +246,20 @@ public class UI {
                     System.out.println("enter a valid character!");
                     break;
             }
+            if (board.checkWin()) {
+                System.out.println("congrats! you won!");
+                board.setStatus("Won");
+                break turn;
+            }
             if (board.isGameFinished()) {
-                if (board.checkWin()) {
-                    System.out.println("congrats! you won!");
-                    board.setStatus("Won");
-                    break turn;
-                } else {
-                    System.out.println("well done!");
-                    System.out.println("your point: " + board.getPoint());
-                    board.setStatus("Finished");
-                    break turn;
-                }
+                System.out.println("well done!");
+                System.out.println("your point: " + board.getPoint());
+                board.setStatus("Finished");
+                break turn;
             }
-            if (validMove) {
-                board.addRandomBlock();
-            }
+        }
+        if (validMove) {
+            board.addRandomBlock();
         }
     }
 

@@ -202,10 +202,12 @@ public class Board {
     }
 
     public boolean checkWin() {
-        if (point == 2048) {
-            status = "Won";
-            return true;
-        }
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                if (board[i][j] == 2048) {
+                    status = "Won";
+                    return true;
+                }
         return false;
     }
 
