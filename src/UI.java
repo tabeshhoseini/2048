@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
@@ -16,7 +17,7 @@ public class UI {
                     signPlayer();
                     break;
                 case 3:
-
+                    leaderboardMenu();
                     break;
                 case 0:
                     break;
@@ -26,25 +27,6 @@ public class UI {
                     break;
             }
         } while (choice != 0);
-
-        // TEST TEST TEST
-        // Board board = new Board(0, 4);
-        // for (int i = 0; i < 4; i++) {
-        // for (int j = 0; j < 4; j++) {
-        // System.out.print(board.getBoard()[i][j] + " ");
-        // }
-        // System.out.println();
-        // }
-        // System.out.println();
-
-        // for (int i = 0; i < 4; i++) {
-        // for (int j = 0; j < 4; j++) {
-        // System.out.print(board.getBoard()[i][j] + " ");
-        // }
-        // System.out.println();
-        // }
-        // System.out.println();
-
     }
 
     private static int getUserInt(String message) {
@@ -257,10 +239,11 @@ public class UI {
                 board.setStatus("Finished");
                 break turn;
             }
+            if (validMove) {
+                board.addRandomBlock();
+            }
         }
-        if (validMove) {
-            board.addRandomBlock();
-        }
+
     }
 
     private static void showStats(Player player) {
@@ -296,5 +279,43 @@ public class UI {
             }
             break;
         }
+    }
+
+    // sort with lambda expression
+    private static ArrayList<Player> showLeaderboard(int boardSize) {
+        ArrayList<Player> players = League.getPlayers();
+        players.sort((p1, p2) -> (p2.getBoardsPointBySize(boardSize) - p1.getBoardsPointBySize(boardSize)));
+
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println((i + 1) + ". " + players.get(i).getUsername() + "  |  "
+                    + players.get(i).getBoardsPointBySize(boardSize));
+        }
+        return players;
+    }
+
+    private static void leaderboardMenu() {
+        int choice;
+        do {
+            System.out.println(
+                    "\n\n\n\n__________LeaderBoard Menu__________\n" + "1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n"
+                            + "0. Exit");
+            choice = getUserInt("choose a leaderboard:  ");
+            switch (choice) {
+                case 1:
+                    showLeaderboard(4);
+                    break;
+                case 2:
+                    showLeaderboard(6);
+                    break;
+                case 3:
+                    showLeaderboard(8);
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("choose a valid number!");
+                    break;
+            }
+        } while (choice != 0);
     }
 }

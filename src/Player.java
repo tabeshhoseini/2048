@@ -84,4 +84,14 @@ public class Player {
         }
         return highest;
     }
+
+    public int getBoardsPointBySize(int boardSize) {
+        int point = 0;
+        for (Board board : boards) {
+            if (board.getSize() == boardSize) {
+                point += board.getPoint();
+            }
+        }
+        return point;
+    }
 }
