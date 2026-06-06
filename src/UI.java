@@ -295,7 +295,6 @@ public class UI {
         }
     }
 
-    // sort with lambda expression
     private static void showLeaderboard(int boardSize) {
         ArrayList<Player> players = League.sortPlayersByPoints(boardSize);
 
