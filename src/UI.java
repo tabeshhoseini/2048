@@ -267,8 +267,8 @@ public class UI {
         System.out.println(player.getUsername() + " game stats" +
                 "\n Overall points: " + player.getOverallPoint() +
                 "\n Highest point: " + player.getHighestPoint() +
-                "\n Number of games: " + player.getGameNumber() +
-                "\n Number of merges: " + player.getMergeNumber() +
+                "\n Games: " + player.getGameNumber() +
+                "\n Merges: " + player.getMergeNumber() +
                 "\n Point average: " + player.getPointAverage() +
                 "\n Highest number: " + player.getHighestNumber());
     }
