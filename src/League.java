@@ -41,4 +41,27 @@ public class League {
         }
         return null;
     }
+
+    public static ArrayList<Player> sortPlayersByPoints(int boardSize) {
+        ArrayList<Player> playersList = players;
+        playersList.sort((p1, p2) -> (p2.getBoardsPointBySize(boardSize) - p1.getBoardsPointBySize(boardSize)));
+
+        return playersList;
+    }
+
+    public static boolean checkPlayerLeadsTable(Player player) {
+        if ((player == sortPlayersByPoints(4).get(0) || player == sortPlayersByPoints(6).get(0)
+                || player == sortPlayersByPoints(8).get(0)) && player.getOverallPoint() != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean checkPlayerLeadsAllTables(Player player) {
+        if (player == sortPlayersByPoints(4).get(0) && player == sortPlayersByPoints(6).get(0)
+                && player == sortPlayersByPoints(8).get(0) && player.getOverallPoint() != 0) {
+            return true;
+        }
+        return false;
+    }
 }

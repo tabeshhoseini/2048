@@ -156,7 +156,8 @@ public class UI {
         int boardSize;
         int choice;
         main: while (true) {
-            System.out.println("1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n" + "4. 10x10 (if your leading a leaderboard)");
+            System.out.println("\n\n\n1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n" + "4. 10x10 (if your leading a leaderboard)\n"
+                    + "5. Optional size(leading all leaderboards)");
             choice = getUserInt("choose your board: ");
             switch (choice) {
                 case 1:
@@ -168,9 +169,22 @@ public class UI {
                 case 3:
                     boardSize = 8;
                     break main;
-                // case 4:
-
-                // break main;
+                case 4:
+                    if (League.checkPlayerLeadsTable(player)) {
+                        boardSize = 10;
+                        break main;
+                    } else {
+                        System.out.println("you don't have the permissino!");
+                        break;
+                    }
+                case 5:
+                    if (League.checkPlayerLeadsAllTables(player)) {
+                        boardSize = getUserInt("choose the size of the board: ");
+                        break main;
+                    } else {
+                        System.out.println("you don't have the permissino!");
+                        break;
+                    }
                 default:
                     System.out.println("choose a valid number!");
                     break;
@@ -282,15 +296,15 @@ public class UI {
     }
 
     // sort with lambda expression
-    private static ArrayList<Player> showLeaderboard(int boardSize) {
-        ArrayList<Player> players = League.getPlayers();
-        players.sort((p1, p2) -> (p2.getBoardsPointBySize(boardSize) - p1.getBoardsPointBySize(boardSize)));
+    private static void showLeaderboard(int boardSize) {
+        ArrayList<Player> players = League.sortPlayersByPoints(boardSize);
 
+        System.out.println(boardSize + "x" + boardSize + " Leaderboard");
         for (int i = 0; i < players.size(); i++) {
             System.out.println((i + 1) + ". " + players.get(i).getUsername() + "  |  "
                     + players.get(i).getBoardsPointBySize(boardSize));
         }
-        return players;
+
     }
 
     private static void leaderboardMenu() {
