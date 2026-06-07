@@ -277,7 +277,8 @@ public class UI {
                 "\n Games: " + player.getGameNumber() +
                 "\n Merges: " + player.getMergeNumber() +
                 "\n Point average: " + player.getPointAverage() +
-                "\n Highest number: " + player.getHighestNumber());
+                "\n Highest number: " + player.getHighestNumber() +
+                "\n Total undo: " + player.getUndoCount());
     }
 
     private static void undoBoard(Board board) {

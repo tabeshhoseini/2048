@@ -72,6 +72,9 @@ public class Player {
     }
 
     public float getPointAverage() {
+        if (getGameNumber() == 0) {
+            return 0;
+        }
         return getOverallPoint() / getGameNumber();
     }
 
@@ -83,6 +86,14 @@ public class Player {
             }
         }
         return highest;
+    }
+
+    public int getUndoCount() {
+        int undoCount = 0;
+        for (Board board : boards) {
+            undoCount += board.getUndoCount();
+        }
+        return undoCount;
     }
 
     public int getBoardsPointBySize(int boardSize) {
