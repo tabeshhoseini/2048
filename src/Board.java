@@ -8,18 +8,22 @@ public class Board {
     private int point;
     private int mergeNumber;
     private int moveNumber;
+    private int undoCount;
     private String status; // won, finished, paused
     private int[][] board;
     private Random random;
 
-    private Board previousBoard;
+    private ArrayList<BoardCopy> previousBoards = new ArrayList<>();
 
-    public Board(int id, int size) {
+    public Board(
+            int id,
+            int size) {
         this.id = id;
         this.size = size;
         this.point = 0;
         this.mergeNumber = 0;
         this.moveNumber = 0;
+        this.undoCount = 0;
         this.board = new int[size][size];
         this.random = new Random();
         this.status = "Paused";
@@ -56,7 +60,11 @@ public class Board {
             int[] newLine = mergeLine(board[i]);
             if (!arrayEquals(newLine, board[i])) {
                 if (!isMoved) {
-                    this.previousBoard = this;
+                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
+                    previousBoards.add(lastBoard);
+                    if (previousBoards.size() > 5) {
+                        previousBoards.remove(0);
+                    }
                 }
                 isMoved = true;
                 board[i] = newLine;
@@ -76,7 +84,11 @@ public class Board {
             int[] newLine = mergeLine(reversedArray);
             if (!arrayEquals(newLine, reversedArray)) {
                 if (!isMoved) {
-                    this.previousBoard = this;
+                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
+                    previousBoards.add(lastBoard);
+                    if (previousBoards.size() > 5) {
+                        previousBoards.remove(0);
+                    }
                 }
                 isMoved = true;
                 board[i] = reverseArray(newLine);
@@ -96,7 +108,11 @@ public class Board {
             int[] newLine = mergeLine(getColumn(i));
             if (!arrayEquals(newLine, getColumn(i))) {
                 if (!isMoved) {
-                    this.previousBoard = this;
+                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
+                    previousBoards.add(lastBoard);
+                    if (previousBoards.size() > 5) {
+                        previousBoards.remove(0);
+                    }
                 }
                 isMoved = true;
                 setColumn(newLine, i);
@@ -117,7 +133,11 @@ public class Board {
             int[] newLine = mergeLine(reversedArray);
             if (!arrayEquals(newLine, reversedArray)) {
                 if (!isMoved) {
-                    this.previousBoard = this;
+                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
+                    previousBoards.add(lastBoard);
+                    if (previousBoards.size() > 5) {
+                        previousBoards.remove(0);
+                    }
                 }
                 isMoved = true;
                 setColumn(reverseArray(newLine), i);
@@ -211,6 +231,14 @@ public class Board {
         return false;
     }
 
+    public void undoBoard() {
+        this.board = previousBoards.get(previousBoards.size() - 1).board;
+        this.point = previousBoards.get(previousBoards.size() - 1).point;
+        this.mergeNumber = previousBoards.get(previousBoards.size() - 1).mergeNumber;
+        this.moveNumber = previousBoards.get(previousBoards.size() - 1).moveNumber;
+        previousBoards.remove(previousBoards.size() - 1);
+    }
+
     private int[] getColumn(int index) {
         int[] column = new int[size];
         for (int i = 0; i < size; i++) {
@@ -248,14 +276,6 @@ public class Board {
         return highest;
     }
 
-    public void setPreviousBoard(Board previousBoard) {
-        this.previousBoard = previousBoard;
-    }
-
-    public Board getPreviousBoard() {
-        return previousBoard;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -283,4 +303,17 @@ public class Board {
     public int getMoveNumber() {
         return moveNumber;
     }
+
+    public int getUndoCount() {
+        return undoCount;
+    }
+
+    public void addUndoCount() {
+        undoCount++;
+    }
+
+    public ArrayList<BoardCopy> getPreviousBoards() {
+        return previousBoards;
+    }
+
 }

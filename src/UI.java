@@ -147,6 +147,7 @@ public class UI {
         for (Board board : player.getBoards()) {
             System.out.println("id: " + board.getId());
             System.out.println("number of moves: " + board.getMoveNumber());
+            System.out.println("undo count: " + board.getUndoCount());
             System.out.println("board status: " + board.getStatus());
             showBoard(board);
         }
@@ -271,10 +272,15 @@ public class UI {
     }
 
     private static void undoBoard(Board board) {
-        if (board.getPreviousBoard() == null) {
+        if (board.getPreviousBoards().isEmpty()) {
             System.out.println("you haven't had any move yet!");
             return;
         }
+        if (board.getUndoCount() == 3) {
+            System.out.println("you have already used undo 3 times!");
+            return;
+        }
+
         int moveBackNumber;
 
         while (true) {
@@ -285,10 +291,14 @@ public class UI {
                 continue;
             }
 
+            board.addUndoCount();
+
             for (int i = 0; i < moveBackNumber; i++) {
-                if (board.getPreviousBoard() != null) {
-                    Board previousBoard = board.getPreviousBoard();
-                    board = previousBoard;
+                if (!board.getPreviousBoards().isEmpty()) {
+                    board.undoBoard();
+                } else {
+                    System.out.println("your total moves are less than " + moveBackNumber);
+                    break;
                 }
             }
             break;
