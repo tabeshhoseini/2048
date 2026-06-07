@@ -251,6 +251,15 @@ public class UI {
             if (board.isGameFinished()) {
                 System.out.println("well done!");
                 System.out.println("your point: " + board.getPoint());
+
+                if (board.getUndoCount() < 3) {
+                    String toUndo = getUserString("do you want to undo? y/n");
+                    if (toUndo.equals("y")) {
+                        undoBoard(board);
+                        continue;
+                    }
+                }
+
                 board.setStatus("Finished");
                 break turn;
             }

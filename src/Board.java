@@ -10,6 +10,7 @@ public class Board {
     private int moveNumber;
     private int undoCount;
     private String status; // won, finished, paused
+    private boolean shuffleUsed;
     private int[][] board;
     private Random random;
 
@@ -24,6 +25,7 @@ public class Board {
         this.mergeNumber = 0;
         this.moveNumber = 0;
         this.undoCount = 0;
+        this.shuffleUsed = false;
         this.board = new int[size][size];
         this.random = new Random();
         this.status = "Paused";
