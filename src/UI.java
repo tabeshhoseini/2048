@@ -217,7 +217,8 @@ public class UI {
         turn: while (true) {
             showBoard(board);
             System.out.println(
-                    "r-right | l-left | u-up | d-down\n" + "n-undo(only three times per board) | e-pause and exit");
+                    "r-right | l-left | u-up | d-down\n"
+                            + "n-undo(only three times per board) | e-pause and exit | s-shuffle(only once)");
             move = getUserChar("enter your move: ");
             validMove = false;
 
@@ -236,9 +237,16 @@ public class UI {
                     break;
                 case 'n':
                     undoBoard(board);
-                    break;
+                    continue;
                 case 'e':
                     break turn;
+                case 's':
+                    if (board.getShuffleUsed()) {
+                        System.out.println("you have already used shuffle!");
+                        continue;
+                    }
+                    board.shuffleBoard();
+                    break;
                 default:
                     System.out.println("enter a valid character!");
                     break;

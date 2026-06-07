@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Collections;
 
 public class Board {
 
@@ -241,6 +242,36 @@ public class Board {
         previousBoards.remove(previousBoards.size() - 1);
     }
 
+    public void shuffleBoard() {
+
+        ArrayList<Integer> numbers = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                numbers.add(board[i][j]);
+            }
+        }
+
+        Collections.shuffle(numbers);
+
+        // user can undo shuffle move
+        BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
+        previousBoards.add(lastBoard);
+        if (previousBoards.size() > 5) {
+            previousBoards.remove(0);
+        }
+
+        int index = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j] = numbers.get(index);
+                index++;
+            }
+        }
+
+        shuffleUsed = true;
+    }
+
     private int[] getColumn(int index) {
         int[] column = new int[size];
         for (int i = 0; i < size; i++) {
@@ -308,6 +339,10 @@ public class Board {
 
     public int getUndoCount() {
         return undoCount;
+    }
+
+    public boolean getShuffleUsed() {
+        return shuffleUsed;
     }
 
     public void addUndoCount() {
