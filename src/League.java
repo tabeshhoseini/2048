@@ -43,7 +43,7 @@ public class League {
     }
 
     public static ArrayList<Player> sortPlayersByPoints(int boardSize) {
-        ArrayList<Player> playersList = players;
+        ArrayList<Player> playersList = new ArrayList<>(players);
 
         // sort with lambda expression
         playersList.sort((p1, p2) -> (p2.getBoardsPointBySize(boardSize) - p1.getBoardsPointBySize(boardSize)));

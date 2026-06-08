@@ -63,11 +63,7 @@ public class Board {
             int[] newLine = mergeLine(board[i]);
             if (!arrayEquals(newLine, board[i])) {
                 if (!isMoved) {
-                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
-                    previousBoards.add(lastBoard);
-                    if (previousBoards.size() > 5) {
-                        previousBoards.remove(0);
-                    }
+                    saveCopy();
                 }
                 isMoved = true;
                 board[i] = newLine;
@@ -87,11 +83,7 @@ public class Board {
             int[] newLine = mergeLine(reversedArray);
             if (!arrayEquals(newLine, reversedArray)) {
                 if (!isMoved) {
-                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
-                    previousBoards.add(lastBoard);
-                    if (previousBoards.size() > 5) {
-                        previousBoards.remove(0);
-                    }
+                    saveCopy();
                 }
                 isMoved = true;
                 board[i] = reverseArray(newLine);
@@ -111,11 +103,7 @@ public class Board {
             int[] newLine = mergeLine(getColumn(i));
             if (!arrayEquals(newLine, getColumn(i))) {
                 if (!isMoved) {
-                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
-                    previousBoards.add(lastBoard);
-                    if (previousBoards.size() > 5) {
-                        previousBoards.remove(0);
-                    }
+                    saveCopy();
                 }
                 isMoved = true;
                 setColumn(newLine, i);
@@ -136,11 +124,7 @@ public class Board {
             int[] newLine = mergeLine(reversedArray);
             if (!arrayEquals(newLine, reversedArray)) {
                 if (!isMoved) {
-                    BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
-                    previousBoards.add(lastBoard);
-                    if (previousBoards.size() > 5) {
-                        previousBoards.remove(0);
-                    }
+                    saveCopy();
                 }
                 isMoved = true;
                 setColumn(reverseArray(newLine), i);
@@ -235,11 +219,24 @@ public class Board {
     }
 
     public void undoBoard() {
-        this.board = previousBoards.get(previousBoards.size() - 1).board;
+        this.board = new int[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.board[i][j] = previousBoards.get(previousBoards.size() - 1).board[i][j];
+            }
+        }
         this.point = previousBoards.get(previousBoards.size() - 1).point;
         this.mergeNumber = previousBoards.get(previousBoards.size() - 1).mergeNumber;
         this.moveNumber = previousBoards.get(previousBoards.size() - 1).moveNumber;
         previousBoards.remove(previousBoards.size() - 1);
+    }
+
+    private void saveCopy() {
+        BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
+        previousBoards.add(lastBoard);
+        if (previousBoards.size() > 5) {
+            previousBoards.remove(0);
+        }
     }
 
     public void shuffleBoard() {
@@ -255,11 +252,7 @@ public class Board {
         Collections.shuffle(numbers);
 
         // user can undo shuffle move
-        BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
-        previousBoards.add(lastBoard);
-        if (previousBoards.size() > 5) {
-            previousBoards.remove(0);
-        }
+        saveCopy();
 
         int index = 0;
         for (int i = 0; i < size; i++) {
