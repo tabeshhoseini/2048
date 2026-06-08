@@ -61,6 +61,7 @@ public class UI {
         String username;
         String password;
         while (true) {
+            // AI assisted (for regex)
             username = getUserString("enter your username: \n"
                     + "it must contain characters, numbers and at least one special character like @, $, #, ...");
             if (username.matches(".*\\w.*") && username.matches(".*[@#$&*%!?].*")) {
@@ -134,13 +135,21 @@ public class UI {
     }
 
     private static void showBoard(Board board) {
-        for (int i = 0; i < board.getSize(); i++) {
-            for (int j = 0; j < board.getSize(); j++) {
-                System.out.print(board.getBoard()[i][j] + " ");
+        int size = board.getSize();
+        int[][] grid = board.getBoard();
+
+        String divider = "+-----".repeat(size) + "+";
+
+        for (int i = 0; i < size; i++) {
+            System.out.println(divider);
+            for (int j = 0; j < size; j++) {
+                String cell = grid[i][j] == 0 ? "   ." : String.format("%4d", grid[i][j]);
+                System.out.print("|" + cell + " ");
             }
-            System.out.println();
+            System.out.println("|");
         }
-        System.out.println();
+        System.out.println(divider);
+        System.out.println("Point: " + board.getPoint() + "\n");
     }
 
     private static void showAllBoards(Player player) {
