@@ -111,6 +111,7 @@ public class UI {
                     "1. Add and play new board\n" +
                     "2. Recent boards\n" +
                     "3. Game stats\n" +
+                    "4. Achievements\n" +
                     "0. Exit");
             choice = getUserInt("");
             switch (choice) {
@@ -126,6 +127,9 @@ public class UI {
                     break;
                 case 3:
                     showStats(player);
+                    break;
+                case 4:
+                    showAchievements(player);
                     break;
                 default:
                     System.out.println("choose a valid number!");
@@ -367,5 +371,11 @@ public class UI {
                     break;
             }
         } while (choice != 0);
+    }
+
+    private static void showAchievements(Player player) {
+        System.out.println("--------User Achievements--------" +
+                "\n1000 points reached: " + player.getPointAchievement() +
+                "\n5 games played: " + player.checkFiveGamesPlayed());
     }
 }

@@ -105,4 +105,21 @@ public class Player {
         }
         return point;
     }
+
+    public int getPointAchievement() {
+        int count = 0;
+        for (Board board : boards) {
+            if (board.getPoint() > 999) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean checkFiveGamesPlayed() {
+        if (boards.size() >= 5) {
+            return true;
+        }
+        return false;
+    }
 }
