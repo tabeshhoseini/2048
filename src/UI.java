@@ -30,22 +30,57 @@ public class UI {
     }
 
     private static int getUserInt(String message) {
-        System.out.println(message);
-        int userNumber = inputReader.nextInt();
-        inputReader.nextLine();
-        return userNumber;
+        while (true) {
+            System.out.println(message);
+            String input = inputReader.nextLine();
+
+            if (input.isEmpty()) {
+                System.out.println("Input cannot be empty. Please enter an integer.");
+                continue;
+            }
+            // using error handling
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println(input + " is not a valid integer. Please try again.");
+            }
+        }
+
     }
 
     private static String getUserString(String message) {
-        System.out.println(message);
-        String userText = inputReader.nextLine();
-        return userText;
+        while (true) {
+            System.out.println(message);
+            String userText = inputReader.nextLine();
+
+            if (userText.isEmpty()) {
+                System.out.println("Input cannot be empty. Please enter a string!");
+                continue;
+            }
+
+            return userText;
+        }
+
     }
 
     private static char getUserChar(String message) {
-        System.out.println(message);
-        char userChar = inputReader.nextLine().charAt(0);
-        return userChar;
+        while (true) {
+            System.out.println(message);
+            String input = inputReader.nextLine();
+
+            if (input.isEmpty()) {
+                System.out.println("Input cannot be empty. Please enter a character.");
+                continue;
+            }
+            char userChar = input.charAt(0);
+
+            if (Character.isLetter(userChar)) {
+                return userChar;
+            } else {
+                System.out.println("Please enter a valid letter (A-Z or a-z).");
+            }
+        }
+
     }
 
     private static void showLoginMenu() {
