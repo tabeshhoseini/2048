@@ -106,7 +106,7 @@ public class UI {
                     + "it must contain characters, numbers and at least one special character like @, $, #, ...");
             if (League.validateUsername(username)) {
                 if (League.isPlayerExist(username)) {
-                    System.out.println("the username is already existed! try another usernaem.");
+                    System.out.println("the username is already existed! try another username.");
                     continue;
                 }
                 break;
