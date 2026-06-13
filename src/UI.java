@@ -40,7 +40,12 @@ public class UI {
             }
             // using error handling
             try {
-                return Integer.parseInt(input);
+                int userInt = Integer.parseInt(input);
+                if (userInt < 0) {
+                    System.out.println("input cannot be negative!");
+                    continue;
+                }
+                return userInt;
             } catch (NumberFormatException e) {
                 System.out.println(input + " is not a valid integer. Please try again.");
             }
@@ -99,14 +104,19 @@ public class UI {
             // AI assisted (for regex)
             username = getUserString("enter your username: \n"
                     + "it must contain characters, numbers and at least one special character like @, $, #, ...");
-            if (username.matches(".*\\w.*") && username.matches(".*[@#$&*%!?].*")) {
+            if (League.validateUsername(username)) {
+                if (League.isPlayerExist(username)) {
+                    System.out.println("the username is already existed! try another usernaem.");
+                    continue;
+                }
                 break;
             }
             System.out.println("please enter a valid username");
+
         }
         while (true) {
             password = getUserString("enter your passsword: \n" + "(at least 5 characters)");
-            if (password.matches(".{5,}")) {
+            if (League.validatePassword(password)) {
                 break;
             }
             System.out.println("please enter a valid password");
@@ -316,7 +326,6 @@ public class UI {
                     }
                 }
 
-                board.setStatus("Finished");
                 break turn;
             }
             if (validMove) {
@@ -339,7 +348,7 @@ public class UI {
 
     private static void undoBoard(Board board) {
         if (board.getPreviousBoards().isEmpty()) {
-            System.out.println("you haven't had any move yet!");
+            System.out.println("you cannot undo right now!");
             return;
         }
         if (board.getUndoCount() == 3) {

@@ -202,7 +202,7 @@ public class Board {
                     }
                 }
             }
-            status = "finished";
+            status = "Finished";
             return true;
         }
         return false;
@@ -240,29 +240,31 @@ public class Board {
     }
 
     public void shuffleBoard() {
+        if (!shuffleUsed) {
+            ArrayList<Integer> numbers = new ArrayList<>();
 
-        ArrayList<Integer> numbers = new ArrayList<>();
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                numbers.add(board[i][j]);
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    numbers.add(board[i][j]);
+                }
             }
+
+            Collections.shuffle(numbers);
+
+            // user can undo shuffle move
+            saveCopy();
+
+            int index = 0;
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    board[i][j] = numbers.get(index);
+                    index++;
+                }
+            }
+
+            shuffleUsed = true;
         }
 
-        Collections.shuffle(numbers);
-
-        // user can undo shuffle move
-        saveCopy();
-
-        int index = 0;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                board[i][j] = numbers.get(index);
-                index++;
-            }
-        }
-
-        shuffleUsed = true;
     }
 
     private int[] getColumn(int index) {

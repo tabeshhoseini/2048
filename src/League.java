@@ -13,6 +13,20 @@ public class League {
         return players;
     }
 
+    public static boolean validateUsername(String username) {
+        if (username.matches(".*\\w.*") && username.matches(".*[@#$&*%!?].*")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean validatePassword(String password) {
+        if (password.matches(".{5,}")) {
+            return true;
+        }
+        return false;
+    }
+
     public static boolean isPlayerExist(String username) {
         for (Player i : players) {
             if (i.getUsername().equals(username)) {
