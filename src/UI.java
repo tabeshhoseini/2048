@@ -89,13 +89,28 @@ public class UI {
 
     }
 
-    private static void showLoginMenu() {
+    // ai assisted for formatting
+    private static void printMenuHeader(String title) {
+        System.out.println("╔════════════════════════════════╗");
+        System.out.printf("║  %-30s║%n", title);
+        System.out.println("╠════════════════════════════════╣");
+    }
 
-        System.out.println("\n\n___________2048___________\n" +
-                "1. Login\n" +
-                "2. Sign up\n" +
-                "3. League leaderboard\n" +
-                "0. Exit");
+    private static void printMenuOption(String option) {
+        System.out.printf("║  %-30s║%n", option);
+    }
+
+    private static void printMenuFooter() {
+        System.out.println("╚════════════════════════════════╝");
+    }
+
+    private static void showLoginMenu() {
+        printMenuHeader("2048");
+        printMenuOption("1. Login");
+        printMenuOption("2. Sign up");
+        printMenuOption("3. League leaderboard");
+        printMenuOption("0. Exit");
+        printMenuFooter();
     }
 
     private static void signPlayer() {
@@ -162,12 +177,14 @@ public class UI {
 
         int choice;
         do {
-            System.out.println("\n\n_____________Game menu_____________\n" +
-                    "1. Add and play new board\n" +
-                    "2. Recent boards\n" +
-                    "3. Game stats\n" +
-                    "4. Achievements\n" +
-                    "0. Exit");
+            printMenuHeader("Game menu");
+            printMenuOption("1. Add and play new board");
+            printMenuOption("2. Recent boards");
+            printMenuOption("3. Game stats");
+            printMenuOption("4. Achievements");
+            printMenuOption("0. Exit");
+            printMenuFooter();
+
             choice = getUserInt("");
             switch (choice) {
                 case 1:
@@ -208,7 +225,8 @@ public class UI {
             System.out.println("|");
         }
         System.out.println(divider);
-        System.out.println("Point: " + board.getPoint() + "\n");
+        System.out.println("Point: " + board.getPoint());
+        System.out.println("Remaining undo: " + (3 - board.getUndoCount() + "\n"));
     }
 
     private static void showAllBoards(Player player) {
@@ -225,9 +243,14 @@ public class UI {
         int boardSize;
         int choice;
         main: while (true) {
-            System.out
-                    .println("\n\n\n1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n" + "4. 10x10 (if you're leading a leaderboard)\n"
-                            + "5. Optional size(leading all leaderboards)");
+            printMenuHeader("choose the board");
+            printMenuOption("1. 4x4");
+            printMenuOption("2. 6x6");
+            printMenuOption("3. 8x8");
+            printMenuOption("4. 10x10");
+            printMenuOption("5. Optional size");
+            printMenuFooter();
+
             choice = getUserInt("choose your board: ");
             switch (choice) {
                 case 1:
@@ -286,8 +309,7 @@ public class UI {
         turn: while (true) {
             showBoard(board);
             System.out.println(
-                    "r-right | l-left | u-up | d-down\n"
-                            + "n-undo(only three times per board) | e-pause and exit | s-shuffle(only once)");
+                    "[r/l/u/d] Move  [n] Undo  [s] Shuffle  [e] Exit");
             move = getUserChar("enter your move: ");
             validMove = false;
 
@@ -347,14 +369,15 @@ public class UI {
     }
 
     private static void showStats(Player player) {
-        System.out.println(player.getUsername() + " game stats" +
-                "\n Overall points: " + player.getOverallPoint() +
-                "\n Highest point: " + player.getHighestPoint() +
-                "\n Games: " + player.getGameNumber() +
-                "\n Merges: " + player.getMergeNumber() +
-                "\n Point average: " + player.getPointAverage() +
-                "\n Highest number: " + player.getHighestNumber() +
-                "\n Total undo: " + player.getUndoCount());
+        printMenuHeader(" Game Stats");
+        printMenuOption(" Overall points: " + player.getOverallPoint());
+        printMenuOption(" Highest point: " + player.getHighestPoint());
+        printMenuOption(" Games: " + player.getGameNumber());
+        printMenuOption(" Merges: " + player.getMergeNumber());
+        printMenuOption(" Point average: " + player.getPointAverage());
+        printMenuOption(" Highest number: " + player.getHighestNumber());
+        printMenuOption(" Total undo: " + player.getUndoCount());
+        printMenuFooter();
     }
 
     private static void undoBoard(Board board) {
@@ -429,8 +452,9 @@ public class UI {
     }
 
     private static void showAchievements(Player player) {
-        System.out.println("--------User Achievements--------" +
-                "\n1000 points reached: " + player.getPointAchievement() +
-                "\n5 games played: " + player.checkFiveGamesPlayed());
+        printMenuHeader("User Achievements");
+        printMenuOption("1000 points reached: " + player.getPointAchievement());
+        printMenuOption("5 games played: " + player.checkFiveGamesPlayed());
+        printMenuFooter();
     }
 }
