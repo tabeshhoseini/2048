@@ -90,7 +90,6 @@ public class UI {
 
     }
 
-    // ai assisted for formatting
     private static void printMenuHeader(String title) {
         System.out.println("╔════════════════════════════════╗");
         System.out.printf("║  %-30s║%n", title);
@@ -228,7 +227,7 @@ public class UI {
             System.out.println(divider);
             for (int j = 0; j < size; j++) {
                 String cell = grid[i][j] == 0 ? "   ." : String.format("%4d", grid[i][j]);
-                System.out.print("|" + cell + " ");
+                System.out.print("|" + "\u001B[97m" + cell + "\u001B[0m" + " ");
             }
             System.out.println("|");
         }
@@ -402,7 +401,8 @@ public class UI {
         int moveBackNumber;
 
         while (true) {
-            moveBackNumber = getUserInt("how many moves do you want to undo?(MAX : 5) ");
+            moveBackNumber = getUserInt(
+                    "how many moves do you want to undo?(MAX : " + board.getPreviousBoards().size() + ") ");
 
             if (moveBackNumber > 5 || moveBackNumber < 1) {
                 System.out.println("\u001B[31m" + "enter a valid number!" + "\u001B[0m");
