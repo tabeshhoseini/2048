@@ -202,7 +202,6 @@ public class Board {
                     }
                 }
             }
-            status = "Finished";
             return true;
         }
         return false;
@@ -281,10 +280,6 @@ public class Board {
         }
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public boolean isBoardOpen() {
         if (this.status.equals("Won") || this.status.equals("Finished")) {
             return false;
@@ -306,6 +301,10 @@ public class Board {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatusToFinished() {
+        this.status = "Finished";
     }
 
     public int[][] getBoard() {
@@ -342,6 +341,13 @@ public class Board {
 
     public void addUndoCount() {
         undoCount++;
+    }
+
+    public boolean checkUserCanUndo() {
+        if (this.undoCount < 3) {
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<BoardCopy> getPreviousBoards() {

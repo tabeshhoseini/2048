@@ -215,8 +215,9 @@ public class UI {
         int boardSize;
         int choice;
         main: while (true) {
-            System.out.println("\n\n\n1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n" + "4. 10x10 (if your leading a leaderboard)\n"
-                    + "5. Optional size(leading all leaderboards)");
+            System.out
+                    .println("\n\n\n1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n" + "4. 10x10 (if you're leading a leaderboard)\n"
+                            + "5. Optional size(leading all leaderboards)");
             choice = getUserInt("choose your board: ");
             switch (choice) {
                 case 1:
@@ -233,7 +234,7 @@ public class UI {
                         boardSize = 10;
                         break main;
                     } else {
-                        System.out.println("you don't have the permissino!");
+                        System.out.println("you are not leading a leaderboard!");
                         break;
                     }
                 case 5:
@@ -241,7 +242,7 @@ public class UI {
                         boardSize = getUserInt("choose the size of the board: ");
                         break main;
                     } else {
-                        System.out.println("you don't have the permissino!");
+                        System.out.println("you are not leading all leaderboards!");
                         break;
                     }
                 default:
@@ -311,14 +312,13 @@ public class UI {
             }
             if (board.checkWin()) {
                 System.out.println("congrats! you won!");
-                board.setStatus("Won");
                 break turn;
             }
             if (board.isGameFinished()) {
                 System.out.println("well done!");
                 System.out.println("your point: " + board.getPoint());
 
-                if (board.getUndoCount() < 3) {
+                if (board.checkUserCanUndo()) {
                     String toUndo = getUserString("do you want to undo? y/n");
                     if (toUndo.equals("y")) {
                         undoBoard(board);
@@ -326,6 +326,7 @@ public class UI {
                     }
                 }
 
+                board.setStatusToFinished();
                 break turn;
             }
             if (validMove) {
@@ -348,10 +349,10 @@ public class UI {
 
     private static void undoBoard(Board board) {
         if (board.getPreviousBoards().isEmpty()) {
-            System.out.println("you cannot undo right now!");
+            System.out.println("No more moves left in history!");
             return;
         }
-        if (board.getUndoCount() == 3) {
+        if (!board.checkUserCanUndo()) {
             System.out.println("you have already used undo 3 times!");
             return;
         }
