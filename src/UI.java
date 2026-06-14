@@ -102,8 +102,12 @@ public class UI {
         String password;
         while (true) {
             // AI assisted (for regex)
-            username = getUserString("enter your username: \n"
+            username = getUserString("enter your username('exit' for exit) \n"
                     + "it must contain characters, numbers and at least one special character like @, $, #, ...");
+
+            if (username.equals("exit")) {
+                return;
+            }
             if (League.validateUsername(username)) {
                 if (League.isPlayerExist(username)) {
                     System.out.println("the username is already existed! try another username.");
@@ -112,10 +116,13 @@ public class UI {
                 break;
             }
             System.out.println("please enter a valid username");
-
         }
         while (true) {
-            password = getUserString("enter your passsword: \n" + "(at least 5 characters)");
+            password = getUserString("enter your passsword:('exit' for exit) \n" + "(at least 5 characters)");
+
+            if (password.equals("exit")) {
+                return;
+            }
             if (League.validatePassword(password)) {
                 break;
             }
