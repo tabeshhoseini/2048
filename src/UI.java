@@ -35,19 +35,20 @@ public class UI {
             String input = inputReader.nextLine();
 
             if (input.isEmpty()) {
-                System.out.println("Input cannot be empty. Please enter an integer.");
+                System.out.println("\u001B[31m" + "Input cannot be empty. Please enter an integer." + "\u001B[0m");
                 continue;
             }
             // using error handling
             try {
                 int userInt = Integer.parseInt(input);
                 if (userInt < 0) {
-                    System.out.println("input cannot be negative!");
+                    System.out.println("\u001B[31m" + "input cannot be negative!" + "\u001B[0m");
                     continue;
                 }
                 return userInt;
             } catch (NumberFormatException e) {
-                System.out.println(input + " is not a valid integer. Please try again.");
+                System.out.println("\u001B[31m" + input + " is not a valid integer. Please try again." + "\u001B[0m");
+
             }
         }
 
@@ -59,7 +60,7 @@ public class UI {
             String userText = inputReader.nextLine();
 
             if (userText.isEmpty()) {
-                System.out.println("Input cannot be empty. Please enter a string!");
+                System.out.println("\u001B[31m" + "Input cannot be empty. Please enter a string!" + "\u001B[0m");
                 continue;
             }
 
@@ -74,7 +75,7 @@ public class UI {
             String input = inputReader.nextLine();
 
             if (input.isEmpty()) {
-                System.out.println("Input cannot be empty. Please enter a character.");
+                System.out.println("\u001B[31m" + "Input cannot be empty. Please enter a character." + "\u001B[0m");
                 continue;
             }
             char userChar = input.charAt(0);
@@ -82,7 +83,7 @@ public class UI {
             if (Character.isLetter(userChar)) {
                 return userChar;
             } else {
-                System.out.println("Please enter a valid letter (A-Z or a-z).");
+                System.out.println("\u001B[31m" + "Please enter a valid letter (A-Z or a-z)." + "\u001B[0m");
             }
         }
 
@@ -110,12 +111,13 @@ public class UI {
             }
             if (League.validateUsername(username)) {
                 if (League.isPlayerExist(username)) {
-                    System.out.println("the username is already existed! try another username.");
+                    System.out.println(
+                            "\u001B[31m" + "the username is already existed! try another username." + "\u001B[0m");
                     continue;
                 }
                 break;
             }
-            System.out.println("please enter a valid username");
+            System.out.println("\u001B[31m" + "please enter a valid username" + "\u001B[0m");
         }
         while (true) {
             password = getUserString("enter your passsword:('exit' for exit) \n" + "(at least 5 characters)");
@@ -126,7 +128,7 @@ public class UI {
             if (League.validatePassword(password)) {
                 break;
             }
-            System.out.println("please enter a valid password");
+            System.out.println("\u001B[31m" + "please enter a valid password" + "\u001B[0m");
         }
         League.addPlayer(username, password);
     }
@@ -141,7 +143,8 @@ public class UI {
             } else if (username.equals("exit")) {
                 return;
             }
-            System.out.println("player not found!");
+            System.out.println("\u001B[31m" + "player not found!" + "\u001B[0m");
+
         }
         while (true) {
             password = getUserString("enter your passsword:\n" + "or type 'exit'");
@@ -150,7 +153,7 @@ public class UI {
             } else if (password.equals("exit")) {
                 return;
             }
-            System.out.println("password is incorrect");
+            System.out.println("\u001B[31m" + "password is incorrect" + "\u001B[0m");
         }
         playerMenu(League.getPlayerByUsername(username));
     }
@@ -184,7 +187,7 @@ public class UI {
                     showAchievements(player);
                     break;
                 default:
-                    System.out.println("choose a valid number!");
+                    System.out.println("\u001B[31m" + "choose a valid number!" + "\u001B[0m");
                     break;
             }
         } while (choice != 0);
@@ -241,7 +244,7 @@ public class UI {
                         boardSize = 10;
                         break main;
                     } else {
-                        System.out.println("you are not leading a leaderboard!");
+                        System.out.println("\u001B[31m" + "you are not leading a leaderboard!" + "\u001B[0m");
                         break;
                     }
                 case 5:
@@ -249,11 +252,11 @@ public class UI {
                         boardSize = getUserInt("choose the size of the board: ");
                         break main;
                     } else {
-                        System.out.println("you are not leading all leaderboards!");
+                        System.out.println("\u001B[31m" + "you are not leading all leaderboards!" + "\u001B[0m");
                         break;
                     }
                 default:
-                    System.out.println("choose a valid number!");
+                    System.out.println("\u001B[31m" + "choose a valid number!" + "\u001B[0m");
                     break;
             }
         }
@@ -272,7 +275,7 @@ public class UI {
                 }
                 return player.getBoardById(boardId);
             }
-            System.out.println("board not found!");
+            System.out.println("\u001B[31m" + "board not found!" + "\u001B[0m");
         } while (boardId != 0);
         return null;
     }
@@ -308,13 +311,13 @@ public class UI {
                     break turn;
                 case 's':
                     if (board.getShuffleUsed()) {
-                        System.out.println("you have already used shuffle!");
+                        System.out.println("\u001B[31m" + "you have already used shuffle!" + "\u001B[0m");
                         continue;
                     }
                     board.shuffleBoard();
                     break;
                 default:
-                    System.out.println("enter a valid character!");
+                    System.out.println("\u001B[31m" + "enter a valid character!" + "\u001B[0m");
                     break;
             }
             if (board.checkWin()) {
@@ -356,11 +359,11 @@ public class UI {
 
     private static void undoBoard(Board board) {
         if (board.getPreviousBoards().isEmpty()) {
-            System.out.println("No more moves left in history!");
+            System.out.println("\u001B[31m" + "No more moves left in history!" + "\u001B[0m");
             return;
         }
         if (!board.checkUserCanUndo()) {
-            System.out.println("you have already used undo 3 times!");
+            System.out.println("\u001B[31m" + "you have already used undo 3 times!" + "\u001B[0m");
             return;
         }
 
@@ -370,7 +373,7 @@ public class UI {
             moveBackNumber = getUserInt("how many moves do you want to undo?(MAX : 5) ");
 
             if (moveBackNumber > 5 || moveBackNumber < 1) {
-                System.out.println("enter a valid number");
+                System.out.println("\u001B[31m" + "enter a valid number!" + "\u001B[0m");
                 continue;
             }
 
@@ -380,7 +383,7 @@ public class UI {
                 if (!board.getPreviousBoards().isEmpty()) {
                     board.undoBoard();
                 } else {
-                    System.out.println("your total moves are less than " + moveBackNumber);
+                    System.out.println("\u001B[31m" + "your total moves are less than " + moveBackNumber + "\u001B[0m");
                     break;
                 }
             }
@@ -419,7 +422,7 @@ public class UI {
                 case 0:
                     break;
                 default:
-                    System.out.println("choose a valid number!");
+                    System.out.println("\u001B[31m" + "choose a valid number!" + "\u001B[0m");
                     break;
             }
         } while (choice != 0);
