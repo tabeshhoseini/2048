@@ -7,6 +7,7 @@ public class UI {
     public static void runGame() {
         int choice;
         do {
+            System.out.println("\n\n\n");
             showLoginMenu();
             choice = getUserInt("enter your choice: ");
             switch (choice) {
@@ -116,8 +117,10 @@ public class UI {
     private static void signPlayer() {
         String username;
         String password;
+
         while (true) {
             // AI assisted (for regex)
+            System.out.println("\n\n");
             username = getUserString("enter your username('exit' for exit) \n"
                     + "it must contain characters, numbers and at least one special character like @, $, #, ...");
 
@@ -135,6 +138,7 @@ public class UI {
             System.out.println("\u001B[31m" + "please enter a valid username" + "\u001B[0m");
         }
         while (true) {
+            System.out.println("\n\n");
             password = getUserString("enter your passsword:('exit' for exit) \n" + "(at least 5 characters)");
 
             if (password.equals("exit")) {
@@ -152,6 +156,7 @@ public class UI {
         String username;
         String password;
         while (true) {
+            System.out.println("\n\n");
             username = getUserString("enter your username: \n" + "or type 'exit'");
             if (League.isPlayerExist(username)) {
                 break;
@@ -162,6 +167,7 @@ public class UI {
 
         }
         while (true) {
+            System.out.println("\n\n");
             password = getUserString("enter your passsword:\n" + "or type 'exit'");
             if (League.checkPassword(password, username)) {
                 break;
@@ -203,6 +209,8 @@ public class UI {
                 case 4:
                     showAchievements(player);
                     break;
+                case 0:
+                    return;
                 default:
                     System.out.println("\u001B[31m" + "choose a valid number!" + "\u001B[0m");
                     break;
@@ -307,6 +315,7 @@ public class UI {
         char move;
         boolean validMove;
         turn: while (true) {
+            System.out.println("\n\n");
             showBoard(board);
             System.out.println(
                     "[r/l/u/d] Move  [n] Undo  [s] Shuffle  [e] Exit");
@@ -417,11 +426,14 @@ public class UI {
     private static void showLeaderboard(int boardSize) {
         ArrayList<Player> players = League.sortPlayersByPoints(boardSize);
 
-        System.out.println(boardSize + "x" + boardSize + " Leaderboard");
+        printMenuHeader(boardSize + "x" + boardSize + " Leaderboard");
         for (int i = 0; i < players.size(); i++) {
-            System.out.println((i + 1) + ". " + players.get(i).getUsername() + "  |  "
-                    + players.get(i).getBoardsPointBySize(boardSize));
+            String row = String.format("%-15s| %d",
+                    (i + 1) + ". " + players.get(i).getUsername(),
+                    players.get(i).getBoardsPointBySize(boardSize));
+            printMenuOption(row);
         }
+        printMenuFooter();
 
     }
 
