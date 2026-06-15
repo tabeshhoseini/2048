@@ -39,8 +39,13 @@ public class Board {
         ArrayList<Block> emptyBlocks = findEmptyBlocks();
 
         Block block = emptyBlocks.get(random.nextInt(emptyBlocks.size()));
+
         // 90% chance of 2, 10% chance of 4
-        board[block.row][block.col] = random.nextDouble() < 0.9 ? 2 : 4;
+        if (random.nextDouble() < 0.9) {
+            board[block.row][block.col] = 2;
+        } else {
+            board[block.row][block.col] = 4;
+        }
     }
 
     private ArrayList<Block> findEmptyBlocks() {
