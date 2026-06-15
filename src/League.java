@@ -13,11 +13,17 @@ public class League {
         return players;
     }
 
-    public static boolean validateUsername(String username) {
-        if (username.matches(".*\\w.*") && username.matches(".*[@#$&*%!?].*")) {
-            return true;
+    public static int validateUsername(String username) {
+        if (!username.matches(".*[a-zA-Z].*")) {
+            return 1;
         }
-        return false;
+        if (!username.matches(".*[@#$&*%!?].*")) {
+            return 2;
+        }
+        if (!username.matches(".*[0-9].*")) {
+            return 3;
+        }
+        return 0;
     }
 
     public static boolean validatePassword(String password) {

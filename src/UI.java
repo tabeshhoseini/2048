@@ -117,8 +117,8 @@ public class UI {
         String username;
         String password;
 
-        while (true) {
-            // AI assisted (for regex)
+        main: while (true) {
+
             System.out.println("\n\n");
             username = getUserString("enter your username('exit' for exit) \n"
                     + "it must contain characters, numbers and at least one special character like @, $, #, ...");
@@ -126,15 +126,25 @@ public class UI {
             if (username.equals("exit")) {
                 return;
             }
-            if (League.validateUsername(username)) {
-                if (League.isPlayerExist(username)) {
+            switch (League.validateUsername(username)) {
+                case 0:
+                    if (League.isPlayerExist(username)) {
+                        System.out.println(
+                                "\u001B[31m" + "the username is already existed! try another username." + "\u001B[0m");
+                        continue;
+                    }
+                    break main;
+                case 1:
+                    System.out.println("\u001B[31m" + "username must contain characters." + "\u001B[0m");
+                    break;
+                case 2:
                     System.out.println(
-                            "\u001B[31m" + "the username is already existed! try another username." + "\u001B[0m");
-                    continue;
-                }
-                break;
+                            "\u001B[31m" + "username must contain at least on special character." + "\u001B[0m");
+                    break;
+                case 3:
+                    System.out.println("\u001B[31m" + "username must contain at least one number." + "\u001B[0m");
+                    break;
             }
-            System.out.println("\u001B[31m" + "please enter a valid username" + "\u001B[0m");
         }
         while (true) {
             System.out.println("\n\n");
@@ -146,7 +156,7 @@ public class UI {
             if (League.validatePassword(password)) {
                 break;
             }
-            System.out.println("\u001B[31m" + "please enter a valid password" + "\u001B[0m");
+            System.out.println("\u001B[31m" + "password must be at least 5 characters." + "\u001B[0m");
         }
         League.addPlayer(username, password);
     }
@@ -173,7 +183,7 @@ public class UI {
             } else if (password.equals("exit")) {
                 return;
             }
-            System.out.println("\u001B[31m" + "password is incorrect" + "\u001B[0m");
+            System.out.println("\u001B[31m" + "password does not match!" + "\u001B[0m");
         }
         playerMenu(League.getPlayerByUsername(username));
     }
@@ -305,7 +315,11 @@ public class UI {
                 }
                 return player.getBoardById(boardId);
             }
+            if (boardId == 0) {
+                break;
+            }
             System.out.println("\u001B[31m" + "board not found!" + "\u001B[0m");
+
         } while (boardId != 0);
         return null;
     }
@@ -313,6 +327,7 @@ public class UI {
     private static void playBoard(Board board) {
         char move;
         boolean validMove;
+        boolean shuffleUsed;
         turn: while (true) {
             System.out.println("\n\n");
             showBoard(board);
@@ -320,6 +335,7 @@ public class UI {
                     "[r/l/u/d] Move  [n] Undo  [s] Shuffle  [e] Exit");
             move = getUserChar("enter your move: ");
             validMove = false;
+            shuffleUsed = false;
 
             switch (move) {
                 case 'r':
@@ -345,32 +361,45 @@ public class UI {
                         continue;
                     }
                     board.shuffleBoard();
+                    shuffleUsed = true;
                     break;
                 default:
                     System.out.println("\u001B[31m" + "enter a valid character!" + "\u001B[0m");
-                    break;
+                    continue;
             }
+
+            if (validMove) {
+                board.addRandomBlock();
+            } else if (!shuffleUsed) {
+                System.out.println("\u001B[31m" + "Invalid move!!!" + "\u001B[0m");
+                continue;
+            }
+
             if (board.checkWin()) {
                 System.out.println("congrats! you won!");
                 break turn;
             }
             if (board.isGameFinished()) {
+                showBoard(board);
                 System.out.println("well done!");
-                System.out.println("your point: " + board.getPoint());
 
                 if (board.checkUserCanUndo()) {
-                    String toUndo = getUserString("do you want to undo? y/n");
-                    if (toUndo.equals("y")) {
-                        undoBoard(board);
-                        continue;
+                    while (true) {
+                        String toUndo = getUserString("do you want to undo?y/n");
+                        if (toUndo.equals("y")) {
+                            undoBoard(board);
+                            continue turn;
+                        } else if (toUndo.equals("n")) {
+                            break;
+                        } else {
+                            System.out.println("\u001B[31m" + "Enter y or n!" + "\u001B[0m");
+                            continue;
+                        }
                     }
                 }
 
                 board.setStatusToFinished();
                 break turn;
-            }
-            if (validMove) {
-                board.addRandomBlock();
             }
         }
 
@@ -402,7 +431,7 @@ public class UI {
 
         while (true) {
             moveBackNumber = getUserInt(
-                    "how many moves do you want to undo?(MAX : " + board.getPreviousBoards().size() + ") ");
+                    "how many moves do you want to undo?(MAX :5)");
 
             if (moveBackNumber > 5 || moveBackNumber < 1) {
                 System.out.println("\u001B[31m" + "enter a valid number!" + "\u001B[0m");
@@ -440,9 +469,9 @@ public class UI {
     private static void leaderboardMenu() {
         int choice;
         do {
-            System.out.println(
-                    "\n\n\n\n__________LeaderBoard Menu__________\n" + "1. 4x4\n" + "2. 6x6\n" + "3. 8x8\n"
-                            + "0. Exit");
+
+            showLeaderboardMenu();
+
             choice = getUserInt("choose a leaderboard:  ");
             switch (choice) {
                 case 1:
@@ -461,6 +490,15 @@ public class UI {
                     break;
             }
         } while (choice != 0);
+    }
+
+    private static void showLeaderboardMenu() {
+        printMenuHeader("LeaderBoard Menu");
+        printMenuOption("1. 4x4");
+        printMenuOption("2. 6x6");
+        printMenuOption("3. 8x8");
+        printMenuOption("0. Exit");
+        printMenuFooter();
     }
 
     private static void showAchievements(Player player) {

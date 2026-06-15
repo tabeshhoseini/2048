@@ -233,7 +233,7 @@ public class Board {
     private void saveCopy() {
         BoardCopy lastBoard = new BoardCopy(board, point, mergeNumber, moveNumber);
         previousBoards.add(lastBoard);
-        if (previousBoards.size() > 5) {
+        if (previousBoards.size() > 15) {
             previousBoards.remove(0);
         }
     }
