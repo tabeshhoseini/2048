@@ -327,7 +327,7 @@ public class UI {
     private static void playBoard(Board board) {
         char move;
         boolean validMove;
-        boolean shuffleUsed;
+        boolean isShuffleMove;
         turn: while (true) {
             System.out.println("\n\n");
             showBoard(board);
@@ -335,7 +335,7 @@ public class UI {
                     "[r/l/u/d] Move  [n] Undo  [s] Shuffle  [e] Exit");
             move = getUserChar("enter your move: ");
             validMove = false;
-            shuffleUsed = false;
+            isShuffleMove = false;
 
             switch (move) {
                 case 'r':
@@ -361,7 +361,7 @@ public class UI {
                         continue;
                     }
                     board.shuffleBoard();
-                    shuffleUsed = true;
+                    isShuffleMove = true;
                     break;
                 default:
                     System.out.println("\u001B[31m" + "enter a valid character!" + "\u001B[0m");
@@ -370,7 +370,7 @@ public class UI {
 
             if (validMove) {
                 board.addRandomBlock();
-            } else if (!shuffleUsed) {
+            } else if (!isShuffleMove) {
                 System.out.println("\u001B[31m" + "Invalid move!!!" + "\u001B[0m");
                 continue;
             }

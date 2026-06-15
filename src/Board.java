@@ -263,7 +263,6 @@ public class Board {
 
             shuffleUsed = true;
         }
-
     }
 
     private int[] getColumn(int index) {
