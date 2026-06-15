@@ -15,7 +15,7 @@ public class UI {
                     loginPlayer();
                     break;
                 case 2:
-                    signPlayer();
+                    registerPlayer();
                     break;
                 case 3:
                     leaderboardMenu();
@@ -106,14 +106,14 @@ public class UI {
 
     private static void showLoginMenu() {
         printMenuHeader("2048");
-        printMenuOption("1. Login");
-        printMenuOption("2. Sign up");
+        printMenuOption("1. Log in");
+        printMenuOption("2. Register");
         printMenuOption("3. League leaderboard");
         printMenuOption("0. Exit");
         printMenuFooter();
     }
 
-    private static void signPlayer() {
+    private static void registerPlayer() {
         String username;
         String password;
 
@@ -130,7 +130,7 @@ public class UI {
                 case 0:
                     if (League.isPlayerExist(username)) {
                         System.out.println(
-                                "\u001B[31m" + "the username is already existed! try another username." + "\u001B[0m");
+                                "\u001B[31m" + "the username is already exists! try another username." + "\u001B[0m");
                         continue;
                     }
                     break main;
@@ -148,7 +148,7 @@ public class UI {
         }
         while (true) {
             System.out.println("\n\n");
-            password = getUserString("enter your passsword:('exit' for exit) \n" + "(at least 5 characters)");
+            password = getUserString("enter your password:('exit' for exit) \n" + "(at least 5 characters)");
 
             if (password.equals("exit")) {
                 return;
@@ -177,7 +177,7 @@ public class UI {
         }
         while (true) {
             System.out.println("\n\n");
-            password = getUserString("enter your passsword:\n" + "or type 'exit'");
+            password = getUserString("enter your password:\n" + "or type 'exit'");
             if (League.checkPassword(password, username)) {
                 break;
             } else if (password.equals("exit")) {
