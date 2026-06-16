@@ -192,13 +192,7 @@ public class UI {
 
         int choice;
         do {
-            printMenuHeader("Game menu");
-            printMenuOption("1. Add and play new board");
-            printMenuOption("2. Recent boards");
-            printMenuOption("3. Game stats");
-            printMenuOption("4. Achievements");
-            printMenuOption("0. Exit");
-            printMenuFooter();
+            showPlayerMenu();
 
             choice = getUserInt("");
             switch (choice) {
@@ -206,6 +200,10 @@ public class UI {
                     addNewBoard(player);
                     break;
                 case 2:
+                    if (player.getBoards().isEmpty()) {
+                        System.out.println("\u001B[31m" + "you haven't played any board yet!" + "\u001B[0m");
+                        break;
+                    }
                     showAllBoards(player);
                     Board board = loadBoard(player);
                     if (board != null) {
@@ -225,6 +223,17 @@ public class UI {
                     break;
             }
         } while (choice != 0);
+    }
+
+    private static void showPlayerMenu() {
+        System.out.println("\n\n");
+        printMenuHeader("Game menu");
+        printMenuOption("1. Add and play new board");
+        printMenuOption("2. Recent boards");
+        printMenuOption("3. Game stats");
+        printMenuOption("4. Achievements");
+        printMenuOption("0. Exit");
+        printMenuFooter();
     }
 
     private static void showBoard(Board board) {
@@ -247,6 +256,7 @@ public class UI {
     }
 
     private static void showAllBoards(Player player) {
+        System.out.println("\n");
         for (Board board : player.getBoards()) {
             System.out.println("id: " + board.getId());
             System.out.println("number of moves: " + board.getMoveNumber());
