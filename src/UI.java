@@ -79,6 +79,10 @@ public class UI {
                 System.out.println("\u001B[31m" + "Input cannot be empty. Please enter a character." + "\u001B[0m");
                 continue;
             }
+            if (input.length() > 1) {
+                System.out.println("\u001B[31m" + "Input must be a character!" + "\u001B[0m");
+                continue;
+            }
             char userChar = input.charAt(0);
 
             if (Character.isLetter(userChar)) {
@@ -342,22 +346,22 @@ public class UI {
             System.out.println("\n\n");
             showBoard(board);
             System.out.println(
-                    "[r/l/u/d] Move  [n] Undo  [s] Shuffle  [e] Exit");
+                    "[w/a/s/d] Move  [n] Undo  [f] Shuffle  [e] Exit");
             move = getUserChar("enter your move: ");
             validMove = false;
             isShuffleMove = false;
 
             switch (move) {
-                case 'r':
+                case 'd':
                     validMove = board.moveRight();
                     break;
-                case 'l':
+                case 'a':
                     validMove = board.moveLeft();
                     break;
-                case 'u':
+                case 'w':
                     validMove = board.moveUp();
                     break;
-                case 'd':
+                case 's':
                     validMove = board.moveDown();
                     break;
                 case 'n':
@@ -365,7 +369,7 @@ public class UI {
                     continue;
                 case 'e':
                     break turn;
-                case 's':
+                case 'f':
                     if (board.getShuffleUsed()) {
                         System.out.println("\u001B[31m" + "you have already used shuffle!" + "\u001B[0m");
                         continue;
